@@ -1,0 +1,47 @@
+@charset "UTF-8";
+@import "../bootstrap/variables";
+@import "../ace/variables";
+
+.file-button{
+  position: relative;
+  overflow: hidden;
+}
+.file-button input[type="file"]{
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  opacity: 0;
+  filter: alpha(opacity=0);
+  transform: translate(-300px, 0) scale(4);
+  font-size: 23px;
+  direction: ltr;
+  cursor: pointer;
+}
+
+.file-button a {
+  font-size: 14px;
+}
+
+.file-add a {
+  color : @btn-primary;
+}
+
+.file-add a:hover{
+  color : @btn-primary;
+  text-decoration: none;
+}
+
+.file-remove a {
+  color : @btn-danger;
+}
+
+.file-remove a:hover{
+  color : @btn-danger;
+  text-decoration: none;
+}
+
+.files audio,
+.files video {
+  max-width: 300px;
+}

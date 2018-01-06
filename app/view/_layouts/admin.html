@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8" />
+    <title nb-bind='title'>{{title}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge, chrome=1">
+    <link href="/public/css/_lib/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="/public/css/_lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/public/css/animate.css" rel="stylesheet">
+    <link href="/public/css/style.css" rel="stylesheet">
+    <script src="/public/js/_lib/vue/vue.js"></script>
+    <script src="/public/js/_lib/underscore/underscore.js"></script>
+    <script src="/public/js/_lib/moment/moment.js"></script>
+    <script src="/public/js/common/utils.js"></script>
+    <script type="text/javascript">
+        EventBus = new Vue()
+    </script> {% block style %} {% endblock %}
+</head>
+
+<body class="top-navigation">
+
+    <div id="wrapper">
+        <div id="page-wrapper" class="gray-bg">
+            <div class="row border-bottom white-bg">
+                <nav class="navbar navbar-static-top" role="navigation">
+                    <div class="navbar-header">
+                        <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed"
+                            type="button">
+                            <i class="fa fa-reorder"></i>
+                        </button>
+                        <a href="" class="navbar-brand">EGGJS</a>
+                    </div>
+                    <div class="navbar-collapse collapse" id="navbar">
+                        <ul class="nav navbar-nav">
+                            {% for page in $layouts %} {% if page.submenu %}
+                            <li class="dropdown">
+                                <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown">{{page.title}}
+                                    <span class="caret"></span>
+                                </a>
+                                <ul role="menu" class="dropdown-menu">
+                                    {% for submenu in page.submenu %}
+                                    <li>
+                                        <a href="{{submenu.link}}">{{submenu.title}}</a>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            {% else %}
+                            <li class="active">
+                                <a href="{{page.link}}">{{page.title}}</a>
+                            </li>
+                            {% endif %} {% endfor %}
+                        </ul>
+                        <ul class="nav navbar-top-links navbar-right">
+                            {% if user_name %}
+                                <li>
+                                    <a href="/user/signout">
+                                        <i class="fa fa-sign-out"></i> 退出
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a href="/user/qq">
+                                        <i class="fa fa-qq"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/user/weixin">
+                                        <i class="fa fa-weixin"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/user/signin">
+                                        <i class="fa fa-sign-in"></i> 登录
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/user/signup">
+                                        <i class="fa fa-sign-in"></i> 注册
+                                    </a>
+                                </li>
+                            {% endif %} 
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+            <div class="wrapper wrapper-content">
+                {% block admin %} {% endblock %}
+            </div>
+            <div class="footer">
+                <div class="pull-right">
+                    10GB of
+                    <strong>250GB</strong> Free.
+                </div>
+                <div>
+                    <strong>Copyright</strong> Example Company &copy; 2014-2017
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="text/javascript" src="/public/js/_lib/jquery/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="/public/js/_lib/bootstrap/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/public/js/_lib/metisMenu/jquery.metisMenu.js"></script>
+    <script type="text/javascript" src="/public/js/_lib/slimscroll/jquery.slimscroll.min.js"></script>
+    <!-- Custom and plugin javascript -->
+    <script type="text/javascript" src="/public/js/inspinia.js"></script>
+    <script type="text/javascript" src="/public/js/_lib/pace/pace.min.js"></script>
+    <!-- Flot -->
+    <script type="text/javascript" src="/public/js/_lib/flot/jquery.flot.js"></script>
+    <script type="text/javascript" src="/public/js/_lib/flot/jquery.flot.tooltip.min.js"></script>
+    <script type="text/javascript" src="/public/js/_lib/flot/jquery.flot.resize.js"></script> {% block script %} {% endblock %}
+</body>

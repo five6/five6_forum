@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8" />
+    <title nb-bind='title'>{{title}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge, chrome=1">
+    <link href="/public/css/_lib/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="/public/css/_lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/public/css/animate.css" rel="stylesheet">
+    <link href="/public/css/style.css" rel="stylesheet">
+    <script src="/public/js/_lib/vue/vue.js"></script>
+    <script src="/public/js/_lib/underscore/underscore.js"></script>
+    <script src="/public/js/_lib/moment/moment.js"></script>
+    <script type="text/javascript">
+        EventBus = new Vue()
+    </script>
+</head>
+
+<body class="top-navigation">
+    {% block style %}
+    {% endblock %}
+    {% block blank %}
+    {% endblock %}
+    {% block script %}
+    {% endblock %}
+    <script type="text/javascript" src="/public/js/_lib/jquery/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="/public/js/_lib/bootstrap/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/public/js/_lib/metisMenu/jquery.metisMenu.js"></script>
+    <script type="text/javascript" src="/public/js/_lib/slimscroll/jquery.slimscroll.min.js"></script>
+    <!-- Custom and plugin javascript -->
+    <script type="text/javascript" src="/public/js/inspinia.js"></script>
+    <script type="text/javascript" src="/public/js/_lib/pace/pace.min.js"></script>
+    <!-- Flot -->
+    <script type="text/javascript" src="/public/js/_lib/flot/jquery.flot.js"></script>
+    <script type="text/javascript" src="/public/js/_lib/flot/jquery.flot.tooltip.min.js"></script>
+    <script type="text/javascript" src="/public/js/_lib/flot/jquery.flot.resize.js"></script>
+    <script type="text/javascript" src="/public/js/common/utils.js"></script>
+</body>
