@@ -8,6 +8,7 @@ module.exports = () => {
       const error = {
         message: '您尚未登录',
         status: 500,
+        code: -1,
       };
       ctx.status = error.status;
       ctx.body = { error };
