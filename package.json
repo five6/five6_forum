@@ -13,6 +13,7 @@
     "egg-scripts": "^2.1.0",
     "egg-validate": "^1.0.0",
     "egg-view-nunjucks": "^2.1.4",
+    "image-size": "^0.6.2",
     "mime-types": "^2.1.17",
     "sizeof": "^1.0.0",
     "stream-to-array": "^2.3.0",

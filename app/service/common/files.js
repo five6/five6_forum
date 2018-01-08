@@ -3,7 +3,7 @@
 const Service = require('egg').Service;
 const fs = require('fs');
 const path = require('path');
-const sizeOf = require('sizeOf');
+const sizeOf = require('sizeof');
 const mime = require('mime-types');
 const sendToWormhole = require('stream-wormhole');
 const toArray = require('stream-to-array');
@@ -19,12 +19,13 @@ module.exports = app => {
         await sendToWormhole(stream);
         throw err;
       }
-      const filename = encodeURIComponent(stream.fields.name);
-      console.log(stream.fields);
+      const filename = encodeURIComponent(stream.filename);
+      console.log(stream);
       const md5 = app.md5(filename + Date.now());
       const target = path.join(this.config.baseDir, 'app/public/files', md5);
       await fs.writeFile(target, buf);
-      const dimensions = sizeOf(stream.fields.path);
+      const dimensions = sizeOf(stream);
+      console.log(dimensions);
       const meta = {
         size: stream.fields.size,
         mime: stream.fields.mimetype,

@@ -7,8 +7,8 @@ module.exports = app => {
   const { router, controller, middleware } = app;
   const menu = middleware.menu();
   const api = middleware.api();
-  // const api = middleware.api();
-  router.get('/', api, menu, controller.page.home.index);
+  const page = middleware.page();
+  router.get('/', page, menu, controller.page.home.index);
   router.get('/user/qq', controller.page.user.signin);
   router.get('/user/weixin', controller.page.user.signin);
   router.get('/user/signin', controller.page.user.signin);
@@ -19,5 +19,5 @@ module.exports = app => {
   router.get('/user/signout', api, controller.api.user.signout);
   router.get('/error500', controller.page.home.error500);
 
-  router.post('/files', controller.common.files.files);
+  router.post('/files', api, controller.common.files.files);
 };

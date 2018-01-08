@@ -6,28 +6,34 @@ new Vue({
     return {
     };
   },
+  methods: {
+    upload() {
+      $('#id_upload').click();
+    },
+  },
 });
 
-$(function() {
-  $('#id-docs-upload').fileupload({
+$(function () {
+  $('#id_upload').fileupload({
     url: '/files',
     dataType: 'json',
     dropZone: null,
     pasteZone: null,
-    start: () => {
-
+    start(start) {
+      console.log(start);
     },
-    done: () => {
-
+    done(e, data) {
+      const result = data.result[0];
+      console.loga(result);
     },
-    fail: () => {
-
+    fail(err) {
+      console.log(err);
     },
     always: () => {
     },
     progress: () => {
-    //   var progress = parseInt(data.loaded / data.total * 100, 10);
-    //   $('#progress-bar').css('width', progress + '%').text(progress + '%');
+      //   var progress = parseInt(data.loaded / data.total * 100, 10);
+      //   $('#progress-bar').css('width', progress + '%').text(progress + '%');
     },
   });
 });
