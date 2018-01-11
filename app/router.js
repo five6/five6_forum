@@ -19,5 +19,9 @@ module.exports = app => {
   router.get('/user/signout', api, controller.api.user.signout);
   router.get('/error500', controller.page.home.error500);
 
-  router.post('/files', api, controller.common.files.files);
+  router.post('/api/files', api, controller.common.files.files);
+
+  // api部分
+  router.post('/api/v1/topic', api, controller.api.topic.create);
+  router.post('/api/v1/topic/:_id/reply', api, controller.api.reply.create);
 };

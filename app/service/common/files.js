@@ -3,7 +3,6 @@
 const Service = require('egg').Service;
 const fs = require('fs');
 const path = require('path');
-const size = require('image-size');
 const sendToWormhole = require('stream-wormhole');
 const toArray = require('stream-to-array');
 module.exports = app => {
