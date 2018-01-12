@@ -33,24 +33,26 @@
                     </div>
                     <div class="navbar-collapse collapse" id="navbar">
                         <ul class="nav navbar-nav">
-                            {% for page in $layouts %} {% if page.submenu %}
-                            <li class="dropdown">
-                                <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown">{{page.title}}
-                                    <span class="caret"></span>
-                                </a>
-                                <ul role="menu" class="dropdown-menu">
-                                    {% for submenu in page.submenu %}
-                                    <li>
-                                        <a href="{{submenu.link}}">{{submenu.title}}</a>
-                                    </li>
-                                    {% endfor %}
-                                </ul>
-                            </li>
-                            {% else %}
-                            <li class="active">
-                                <a href="{{page.link}}">{{page.title}}</a>
-                            </li>
-                            {% endif %} {% endfor %}
+                            {% for page in $layouts %} 
+                                {% if page.submenu %}
+                                <li class="dropdown">
+                                    <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown">{{page.title}}
+                                        <span class="caret"></span>
+                                    </a>
+                                    <ul role="menu" class="dropdown-menu">
+                                        {% for submenu in page.submenu %}
+                                        <li>
+                                            <a href="{{submenu.link}}">{{submenu.title}}</a>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                                {% else %}
+                                <li class="active">
+                                    <a href="{{page.link}}">{{page.title}}</a>
+                                </li>
+                                {% endif %}
+                             {% endfor %}
                         </ul>
                         <ul class="nav navbar-top-links navbar-right">
                             {% if user_name %}
@@ -86,15 +88,16 @@
                 </nav>
             </div>
             <div class="wrapper wrapper-content">
-                {% block admin %} {% endblock %}
+                {% block admin %}
+                 {% endblock %}
             </div>
             <div class="footer">
                 <div class="pull-right">
-                    10GB of
-                    <strong>250GB</strong> Free.
+                    详情请联系
+                    <strong>QQ</strong> <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=936333511&site=qq&menu=yes"><img border="0" src="img/button_11.gif" alt="烟雨江南" title="烟雨江南"/></a>
                 </div>
                 <div>
-                    <strong>Copyright</strong> Example Company &copy; 2014-2017
+                    <strong>Copyright</strong> 烟雨江南 &copy; 2017-2018
                 </div>
             </div>
         </div>
