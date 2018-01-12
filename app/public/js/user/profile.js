@@ -15,7 +15,7 @@ new Vue({
 
 $(function () {
   $('#id_upload').fileupload({
-    url: '/files',
+    url: '/api/v1/files',
     dataType: 'json',
     dropZone: null,
     pasteZone: null,
@@ -24,7 +24,7 @@ $(function () {
     },
     done(e, data) {
       const result = data.result[0];
-      console.loga(result);
+      console.log(result);
     },
     fail(err) {
       console.log(err);

@@ -52,5 +52,5 @@ module.exports = app => {
 
 
   // 文件
-  router.post('/api/files', api, controller.common.files.files);
+  router.post('/api/v1/files', api, controller.common.files.files);
 };
