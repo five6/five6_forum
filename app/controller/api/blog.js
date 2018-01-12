@@ -3,7 +3,7 @@
 const Controller = require('egg').Controller;
 
 module.exports = () => {
-  class TopicController extends Controller {
+  class BlogController extends Controller {
     async create(ctx) {
       ctx.body = {
         code: 0,
@@ -35,5 +35,5 @@ module.exports = () => {
       };
     }
   }
-  return TopicController;
+  return BlogController;
 };

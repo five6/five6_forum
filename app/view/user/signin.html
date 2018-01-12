@@ -24,12 +24,7 @@
                 </div>
                 <button type="submit" class="btn btn-primary block full-width m-b">登录</button>
                 <button type="button" onclick="location.href='/user/signup'" class="btn btn-white block full-width m-b">没有账号</button>
-                <a><small>第三方登录</small></a>
-                <div class="form-group">
-                    <div class="col-sm-4" id="qqLoginBtn" ></div>
-                    <!-- <button type="button" class="btn btn-info m-r-md"><i class="fa fa-weixin"></i></button> -->
-                    <!-- <button type="button" class="btn btn-primary"><i class="fa fa-weibo"></i></button> -->
-                </div>
+              
             </form>
         </div>
     </div>
@@ -37,13 +32,19 @@
 {% endblock  %}
 
 {% block script %}
-<script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="1106660560" charset="utf-8"></script>
+<!-- <script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="1106660560" charset="utf-8"></script> -->
     <script type="text/javascript" src="/public/js/_lib/jquery/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="/public/js/_lib/bootstrap/bootstrap.min.js"></script>
     <script type="text/javascript">
-        QC.Login({
-            btnId:"qqLoginBtn"	//插入按钮的节点id
-        });
+    //   <a><small>第三方登录</small></a>
+    //             <div class="form-group">
+    //                 <div class="col-sm-4" id="qqLoginBtn" ></div>
+    //                 <button type="button" class="btn btn-info m-r-md"><i class="fa fa-weixin"></i></button> -->
+    //                 <button type="button" class="btn btn-primary"><i class="fa fa-weibo"></i></button>
+    //             </div>>
+    //     QC.Login({
+    //         btnId:"qqLoginBtn"	//插入按钮的节点id
+    //     });
     </script>
 {% endblock  %}
 

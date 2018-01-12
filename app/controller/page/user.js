@@ -10,9 +10,6 @@ class UserController extends Controller {
   async qq(ctx) {
     await ctx.show('signin');
   }
-  async weixin(ctx) {
-    await ctx.show('signin');
-  }
   async signup(ctx) {
     await ctx.show('signup');
   }
@@ -21,6 +18,12 @@ class UserController extends Controller {
   }
   async profile(ctx) {
     await ctx.show('profile');
+  }
+  async blog(ctx) {
+    await ctx.show('blog');
+  }
+  async topic(ctx) {
+    await ctx.show('topic');
   }
 }
 

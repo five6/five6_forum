@@ -35,20 +35,20 @@
                         <ul class="nav navbar-nav">
                             {% for page in $layouts %} 
                                 {% if page.submenu %}
-                                <li class="dropdown">
+                                <li class="dropdown {{page.active}}">
                                     <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown">{{page.title}}
                                         <span class="caret"></span>
                                     </a>
                                     <ul role="menu" class="dropdown-menu">
                                         {% for submenu in page.submenu %}
-                                        <li>
+                                        <li class="{{submenu.active}}">
                                             <a href="{{submenu.link}}">{{submenu.title}}</a>
                                         </li>
                                         {% endfor %}
                                     </ul>
                                 </li>
                                 {% else %}
-                                <li class="active">
+                                <li class="{{page.active}}">
                                     <a href="{{page.link}}">{{page.title}}</a>
                                 </li>
                                 {% endif %}
@@ -65,11 +65,6 @@
                                 <li>
                                     <a href="/user/qq">
                                         <i class="fa fa-qq"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/user/weixin">
-                                        <i class="fa fa-weixin"></i>
                                     </a>
                                 </li>
                                 <li>
