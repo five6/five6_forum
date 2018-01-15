@@ -5,7 +5,9 @@ module.exports = app => {
   const TopicSchema = new mongoose.Schema({
     _id: { type: Object },
     author_user: { type: String },
-    content: { typpe: String },
+    type: { type: String, default: 'share' },
+    title: { type: String },
+    content: { type: String },
     top: { type: Boolean, default: false }, // 置顶
     good: { type: Boolean, default: false }, // 精华
     lock: { type: Boolean, default: false }, // 系统不显示

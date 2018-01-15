@@ -1,15 +1,26 @@
 {% extends "_layouts/admin.html" %}
 
+{% block style %}
+    <link href="/public/css/_lib/summernote/summernote.css" rel="stylesheet">
+    <link href="/public/css/_lib/summernote/summernote-bs3.css" rel="stylesheet">
+{% endblock%}
+
 {% block admin %}
 
-<div class="ibox">
-    <div class="ibox-content">
-        <div class="spiner-example">
-            <div class="sk-spinner sk-spinner-three-bounce">
-                <div class="sk-bounce1"></div>
-                <div class="sk-bounce2"></div>
-                <div class="sk-bounce3"></div>
+<div class="row"  id="app">
+    <div class="ibox">
+        <div class="ibox-content">
+            <div class="ibox-content no-padding">
+                    <textarea placeholder="请输入标题" v-model="blog.title" maxlength="12" style="font-size:30px; resize:none;" rows="1" class="form-control m-b-md">
+                    </textarea>
+                    <div class="summernote">
+                    </div>
             </div>
+        </div>
+    </div>
+    <div class="ibox">
+        <div class="ibox-content">
+            <button type="button" @click="save" class="btn btn-primary btn-xs">保存</button>
         </div>
     </div>
 </div>
@@ -17,6 +28,10 @@
 
 
 
-{% endblock %}
 
+{% endblock %}
+{% block script %}
+<script src="/public/js/_lib/summernote/summernote.min.js"></script>
+<script src="/public/js/blog/create.js"></script>
+{% endblock %}
 

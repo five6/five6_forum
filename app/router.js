@@ -26,7 +26,7 @@ module.exports = app => {
   router.get('/user/signout', api, controller.api.user.signout);
 
 
-  // router.get('/error500', controller.page.home.error500);
+  router.get('/error500', controller.page.home.error500);
 
   // ********* topic *********
   // page
