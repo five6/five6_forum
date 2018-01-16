@@ -29,7 +29,7 @@ new Vue({
                 contentType: 'application/json',
                 success: function (e) {
                     console.log(e);
-                    // location.href = '/user/blog';
+                    location.href = '/user/blog';
                 },
                 error: function () {
                 }

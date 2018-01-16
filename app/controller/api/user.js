@@ -3,6 +3,10 @@
 const Controller = require('egg').Controller;
 
 class UserController extends Controller {
+  async qq() {
+    console.log(this.ctx.request);
+    this.ctx.body = {};
+  }
   async signin() {
     const rule = {
       username: { required: true, type: 'string' },
@@ -47,6 +51,13 @@ class UserController extends Controller {
   async signout() {
     this.ctx.logout();
     this.ctx.redirect('/user/signin');
+  }
+  async topic() {
+    const topic = await this.ctx.service.user.topic();
+    this.ctx.body = {
+      code: 0,
+      data: topic,
+    };
   }
 }
 

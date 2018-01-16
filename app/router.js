@@ -12,7 +12,6 @@ module.exports = app => {
 
   // **********用户 ***************
   // page
-  router.get('/user/qq', controller.page.user.signin);
   router.get('/user/signin', controller.page.user.signin);
   router.get('/user/signup', controller.page.user.signup);
 
@@ -24,7 +23,9 @@ module.exports = app => {
   router.post('/user/signin', controller.api.user.signin);
   router.post('/user/signup', controller.api.user.signup);
   router.get('/user/signout', api, controller.api.user.signout);
-
+  router.get('/api/v1/user/topic', api, controller.api.user.topic);
+  router.post('/user/signin/qq', controller.api.user.qq);
+  router.get('/user/signin/qq', controller.api.user.qq);
 
   router.get('/error500', controller.page.home.error500);
 
@@ -49,7 +50,6 @@ module.exports = app => {
   router.put('/api/v1/blog/:_id', api, controller.api.blog.edit);
   router.get('/api/v1/blog/', api, controller.api.blog.list);
   router.post('/api/v1/blog/:_id/reply', api, controller.api.blog.reply);
-
 
   // 文件
   router.post('/api/v1/files', api, controller.common.files.files);

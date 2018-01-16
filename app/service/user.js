@@ -1,6 +1,6 @@
 'use strict';
 const Service = require('egg').Service;
-
+const _ = require('lodash');
 class UserService extends Service {
   async signin() {
     const body = this.ctx.request.body;
@@ -28,6 +28,29 @@ class UserService extends Service {
       this.ctx.logger.error(e);
     }
     return ret;
+  }
+  async topic() {
+    const skip = parseInt(this.ctx.query.start || 0);
+    const size = parseInt(this.ctx.query.length || 10);
+    const topics = await this.ctx.model.Topic.find({}).skip(skip).limit(size);
+    const replyObj = {};
+    const topicIds = _.map(topics, topic => {
+      return topic._id + '';
+    });
+    const cond = {
+      topic_id: topicIds,
+    };
+    const replies = await this.ctx.model.TopicReply.find(cond);
+    _.chain(replies).groupBy(c => {
+      return c.topic_id;
+    }).each((array, c) => {
+      replyObj[c] = array;
+    })
+      .value();
+    _.each(topics, topic => {
+      topic.replies = replyObj[topic._id];
+    });
+    return topics;
   }
 }
 
