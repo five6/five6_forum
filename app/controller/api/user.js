@@ -53,10 +53,16 @@ class UserController extends Controller {
     this.ctx.redirect('/user/signin');
   }
   async topic() {
-    const topic = await this.ctx.service.user.topic();
+    const result = await this.ctx.service.user.topic();
+    this.ctx.body = {
+      data: result.data, recordsTotal: result.count, recordsFiltered: result.count,
+    };
+  }
+  async blog() {
+    const blog = await this.ctx.service.user.blog();
     this.ctx.body = {
       code: 0,
-      data: topic,
+      data: blog,
     };
   }
 }

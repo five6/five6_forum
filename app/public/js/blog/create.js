@@ -19,9 +19,11 @@ new Vue({
     methods: {
         save() {
             var self = this;
+            var date = new Date();
             var html = $('.summernote').summernote('code');
             this.blog.content = html;
-            this.blog.create_at = new Date();
+            this.blog.create_at = date;
+            this.blog.update_at = date
             $.ajax({
                 type: 'post',
                 url: '/api/v1/blog',

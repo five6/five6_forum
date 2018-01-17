@@ -30,17 +30,21 @@ class UserService extends Service {
     return ret;
   }
   async topic() {
+    const cond = {
+      author_user: this.ctx.user._id,
+    };
     const skip = parseInt(this.ctx.query.start || 0);
     const size = parseInt(this.ctx.query.length || 10);
-    const topics = await this.ctx.model.Topic.find({}).skip(skip).limit(size);
+    const topics = await this.ctx.model.Topic.find(cond).skip(skip).limit(size);
+    const _count = await this.ctx.model.Topic.count(cond);
     const replyObj = {};
     const topicIds = _.map(topics, topic => {
       return topic._id + '';
     });
-    const cond = {
+    const cond2 = {
       topic_id: topicIds,
     };
-    const replies = await this.ctx.model.TopicReply.find(cond);
+    const replies = await this.ctx.model.TopicReply.find(cond2);
     _.chain(replies).groupBy(c => {
       return c.topic_id;
     }).each((array, c) => {
@@ -48,9 +52,16 @@ class UserService extends Service {
     })
       .value();
     _.each(topics, topic => {
+      topic.DT_RowId = topic._id;
       topic.replies = replyObj[topic._id];
     });
-    return topics;
+    return {
+      data: topics,
+      count: _count,
+    };
+  }
+  async blog() {
+    return [];
   }
 }
 
