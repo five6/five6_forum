@@ -1,22 +1,50 @@
 {% extends "_layouts/admin.html" %}
-
+{% block style %}
+    <link href="/public/css/_lib/dataTables/datatables.min.css" rel="stylesheet">
+    <style>
+    </style>
+{% endblock  %}
 {% block admin %}
-
-<div class="ibox">
-    <div class="ibox-content">
-        <div class="spiner-example">
-            <div class="sk-spinner sk-spinner-three-bounce">
-                <div class="sk-bounce1"></div>
-                <div class="sk-bounce2"></div>
-                <div class="sk-bounce3"></div>
+<div class="row" id="app">
+    <div class="col-lg-12">
+        <div class="ibox">
+            <div class="ibox-content">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="id_blogs">
+                    </table>
+                </div>
             </div>
         </div>
     </div>
+    <div class="modal inmodal fade" id="id_modal"  role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content animated fadeIn">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">Close</span>
+              </button>
+              <h4 class="modal-title">
+                  详情
+              </h4>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                  <form role="form" class="form-horizontal">
+                        <div class="col-lg-12">
+                            
+                        </div>  
+                  </form>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <template>
+                <button type="button" class="btn btn-primary">OK</button>
+              </template>
+            </div>
 </div>
-
-
-
-
 {% endblock %}
-
-
+{% block script %}
+    <script type="text/javascript" src="/public/js/_lib/dataTables/datatables.min.js"></script>
+    <script type="text/javascript" src="/public/js/user/blog.js"></script>
+{% endblock  %}
