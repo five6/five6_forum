@@ -7,6 +7,7 @@
     },
     "globals": {
         "$": false,
+        "moment":false,
         "EventBus": false,
         "Vue": false,
         "T": false,

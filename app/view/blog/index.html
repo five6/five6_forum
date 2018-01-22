@@ -1,16 +1,47 @@
 {% extends "_layouts/admin.html" %}
+{% include "vue_components/pagination.html" %}
 
 {% block admin %}
 
-<div class="ibox">
-    <div class="ibox-content">
-       blogs
-    </div>
+<div class="row" id="app">
+    <template v-for="(blog, index) in blogs">
+        <div class="col-lg-4">
+            <div class="ibox">
+                <div class="ibox-content">
+                    <a class="btn-link">
+                        <h2>
+                            ${blog.title}
+                        </h2>
+                    </a>
+                    <div class="small m-b-xs">
+                        <strong>${blog.author_user}</strong> <span class="text-muted"><i class="fa fa-clock-o"></i>${blog.create_at | formatTime}</span>
+                    </div>
+                    <p v-html="blog.content" />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <button class="btn btn-primary btn-xs" type="button">详情</button>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="small text-right">
+                                <!-- <h5>Stats:</h5> -->
+                                <div> 
+                                    <i class="fa fa-comments-o"> </i> ${blog.reply_count} 条评论 
+                                </div>
+                                <i class="fa fa-eye"> </i> ${blog.visit_count} 个阅读
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <pagination-component :parent="blogs" link="/api/v1/blog"  />
 </div>
-
-
 
 
 {% endblock %}
 
+{% block script %}
+<script src="/public/js/blog/index.js"></script>
+{% endblock %}
 

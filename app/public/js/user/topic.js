@@ -27,7 +27,9 @@ new Vue({
                 },
                 {
                     title: '', data: function (item) {
-                        return '<a class="btn btn-xs text-navy class-detail-row">详情</a>'
+                        return '<a class="btn btn-xs text-navy class-detail-row">详情</a>' +
+                            '<a class="btn btn-xs text-danger class-delete-row">删除</a>';
+
                     }
                 }
             ];
@@ -56,13 +58,7 @@ new Vue({
                 },
                 rowCallback: function (nRow, rowData) {
                     $(nRow).find('.class-detail-row').on('click', function () {
-                        if (!rowData.place)
-                            rowData.place = {
-                                input: ''
-                            }
-                        self.station = rowData;
-
-                        self.edit = true;
+                        $('#id_modal').modal('show');
                     })
                 },
                 drawCallback: function (oSettings) {

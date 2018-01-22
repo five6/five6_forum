@@ -27,9 +27,10 @@ module.exports = () => {
       };
     }
     async list(ctx) {
+      const list = await ctx.service.blog.list();
       ctx.body = {
         code: 0,
-        data: [],
+        data: list,
       };
     }
     async edit(ctx) {

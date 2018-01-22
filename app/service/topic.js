@@ -12,6 +12,13 @@ module.exports = () => {
       const result = await topic.save();
       return result;
     }
+    async list() {
+      const skip = parseInt(this.ctx.query.start || 0);
+      const size = parseInt(this.ctx.query.length || 10);
+      const cond = {};
+      const topics = await this.ctx.model.Topic.find(cond).skip(skip).limit(size);
+      return topics;
+    }
   }
   return TopicService;
 };
