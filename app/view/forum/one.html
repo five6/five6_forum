@@ -1,0 +1,23 @@
+{% extends "_layouts/admin.html" %}
+
+{% block style %}
+   <style type="text/css">
+        [v-cloak] { display: none; }
+        .col-lg-4 img {
+            max-width: 100%;
+        }
+   </style>
+{% endblock %}
+{% block admin %}
+<!-- {% include "../vue_components/pagination.html" %} -->
+
+<div class="row" id="app" v-cloak>
+
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script src="/public/js/forum/one.js"></script>
+{% endblock %}
+

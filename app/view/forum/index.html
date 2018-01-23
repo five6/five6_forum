@@ -1,0 +1,81 @@
+{% extends "_layouts/admin.html" %}
+
+{% block style %}
+   <style type="text/css">
+        [v-cloak] { display: none; }
+        .col-lg-4 img {
+            max-width: 100%;
+        }
+   </style>
+{% endblock %}
+{% block admin %}
+<!-- {% include "../vue_components/pagination.html" %} -->
+
+<div class="row" id="app" v-cloak>
+    <div class="col-lg-12">
+        <div class="wrapper wrapper-content">
+            <div class="ibox-content m-b-sm border-bottom">
+                <div class="p-xs">
+                    <div class="pull-left m-r-md">
+                        <i class="fa fa-globe text-navy mid-icon"></i>
+                    </div>
+                    <h2>欢迎使用FIVE6论坛</h2>
+                    <span>
+                        选择您感兴趣的内容,您也可以<a @click="createForum" style="vertical-align: baseline;" class="btn text-navy">新建板块</a>
+                    </span>
+                </div>
+            </div>
+            <div class="ibox-content forum-container">
+                <div class="forum-title">
+                    <div class="pull-right forum-desc">
+                        <small>总帖子数: 320,800</small>
+                    </div>
+                    <h3>主版</h3>
+                </div>
+                
+                <div class="forum-item active">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="forum-icon">
+                                    <i class="fa fa-shield"></i>
+                                </div>
+                                <a @click="showForumTopic" class="forum-item-title">说说你们家乡的年味</a>
+                                <div class="forum-sub-title">马上过春节了，你们家乡都有哪些不同的风俗呢？</div>
+                            </div>
+                            <div class="col-md-1 forum-info">
+                                <span class="views-number">
+                                    1216
+                                </span>
+                                <div>
+                                    <small>浏览</small>
+                                </div>
+                            </div>
+                            <div class="col-md-1 forum-info">
+                                <span class="views-number">
+                                    368
+                                </span>
+                                <div>
+                                    <small>话题</small>
+                                </div>
+                            </div>
+                            <div class="col-md-1 forum-info">
+                                <span class="views-number">
+                                    140
+                                </span>
+                                <div>
+                                    <small>帖子</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script src="/public/js/forum/index.js"></script>
+{% endblock %}
+

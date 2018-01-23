@@ -5,10 +5,10 @@ module.exports = () => {
   return function* (next) {
     const sidenav = [
       {
-        link: '/blog/index', title: '博客',
+        link: '/forum', title: '论坛',
       },
       {
-        link: '/topic/index', title: '主题',
+        link: '/blog/index', title: '博客',
       },
       {
         link: null, title: '个人中心',
@@ -23,10 +23,10 @@ module.exports = () => {
             link: '/user/blog', title: '我的博客',
           },
           {
-            link: '/topic/create', title: '发布主题文章',
+            link: '/blog/create', title: '写博客',
           },
           {
-            link: '/blog/create', title: '写博客',
+            link: '/topic/create', title: '发帖子',
           },
         ],
       },

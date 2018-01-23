@@ -3,14 +3,11 @@ new Vue({
     el: '#app',
     data() {
         return {
-            types:[
-                {id:'share', content: '分享'},
-                { id:'interlocution', content: '问答' },
-                {id:'employ', content: '招聘'}
-            ],
+            sections:[],
             topic: {
-                type:'share',
+                sectionId: -9999,
                 title: '',
+                section:'',
                 content: '',
             }
         };
@@ -18,8 +15,23 @@ new Vue({
     mounted() {
         $('.summernote').summernote({
             height: 200,
+            placeholder:'请输入内容。。。',
             autoHeight: true
         });
+        this.sections = [
+            {
+                id:'123',
+                name: '娱乐八卦'
+            },
+            {
+                id:'1234',
+                name: '杂谈'
+            },
+            {
+                id:'12345',
+                name: '情感天地'
+            }
+        ]
     },
     methods: {
         save() {

@@ -30,16 +30,6 @@ module.exports = app => {
 
   router.get('/error500', controller.page.home.error500);
 
-  // ********* topic *********
-  // page
-  router.get('/topic/create', page, menu, controller.page.topic.create);
-  router.get('/topic/index', page, menu, controller.page.topic.index);
-  // api
-  router.post('/api/v1/topic', api, controller.api.topic.create);
-  router.delete('/api/v1/topic/:_id', api, controller.api.topic.delete);
-  router.put('/api/v1/topic/:_id', api, controller.api.topic.edit);
-  router.get('/api/v1/topic/', api, controller.api.topic.list);
-  router.post('/api/v1/topic/:_id/reply', api, controller.api.topic.reply);
 
   //  ******* blog ********
   // page
@@ -51,6 +41,18 @@ module.exports = app => {
   router.put('/api/v1/blog/:_id', api, controller.api.blog.edit);
   router.get('/api/v1/blog/', api, controller.api.blog.list);
   router.post('/api/v1/blog/:_id/reply', api, controller.api.blog.reply);
+
+  // ********************************* 论坛  ********************************
+  // page
+  router.get('/forum', page, menu, controller.page.forum.main.index);
+  router.get('/forum/_id', page, menu, controller.page.forum.main.one);
+  router.get('/topic/create', page, menu, controller.page.forum.topic.create);
+  // api
+  router.post('/api/v1/topic', api, controller.api.forum.topic.create);
+  router.delete('/api/v1/topic/:_id', api, controller.api.forum.topic.delete);
+  router.put('/api/v1/topic/:_id', api, controller.api.forum.topic.edit);
+  router.get('/api/v1/topic/', api, controller.api.forum.topic.list);
+  router.post('/api/v1/topic/:_id/reply', api, controller.api.forum.topic.reply);
 
   // 文件
   router.post('/api/v1/files', api, controller.common.files.files);

@@ -7,15 +7,17 @@ new Vue({
         }
     },
     mounted() {
-        var self = this;
-        $.get('/api/v1/topic', function (result) {
-            if (result.data) {
-                self.topics = result.data;
-            }
-        })
+    },
+    methods: {
+        createForum(){
+
+        },
+        showForumTopic(_id) {
+            window.location.href = "/forum/" + _id
+        }
     },
     filters: {
-        formatTime: function(time) {
+        formatTime: function (time) {
             return moment(time).fromNow();
         }
     }
