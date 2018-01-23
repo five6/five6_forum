@@ -1,46 +1,52 @@
 <style>
 </style>
 <script type="text/x-template" id="id-pagination">
-    <div class="col-lg-12">
-            <ul class="pagination">
-                <template>
-                </template>
-                <li><a href="#">&laquo;</a></li>
-                <li class="active"><a href="#">1</a></li>
-                <li class="disabled"><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li><a href="#">&raquo;</a></li>
-            </ul>
-        </div>
+    <div class="col-lg-12" v-if="total_page > 1">
+        <ul class="pager">
+            <li @click="pager(-1)" :class="page ==1 ? 'disabled': '' "><a>上一页</a></li>
+            <li @click="pager(1)" :class="total_page == page ? 'disabled': '' "><a>下一页</a></li>
+        </ul>
+    </div>
 </script>
 
 <script>
     Vue.component('pagination-component', {
         name: 'pagination-component',
         template: '#id-pagination',
-        props: [
-            'link'
-        ],
+        props: {
+            link: String,
+            size: Number
+        },
         data() {
-            return {}
+            return {
+                page: 1,
+                total_page: 1
+            }
         },
         mounted() {
-            this.fetch();
+            console.log('dddd');
+            this.fetch(0);
         },
         methods: {
-            pager() {
-
+            pager(v) {
+                if (v > 0 && this.page < this.total_page || v < 0 && this.page > 1) {
+                    this.fetch(v);
+                }
             },
             popToParent(data) {
-                this.$emit('renderedData', data);
+                this.$emit('renderdata', data);
             },
-            fetch() {
+            fetch(value) {
                 var self = this;
-                $.get(this.link, function (result) {
-                    var data = result.data;
-                    self.popToParent(data);
+                $.get(this.link + '?page=' + (this.page + value) + '&per_page=' + this.size, function (result) {
+                    if (result.code === 0) {
+                        var data = result.data;
+                        self.page = data.page;
+                        self.count = data.count;
+                        self.total_page = data.total_page;
+                        self.popToParent(data.data);
+                    }
+
                 })
             }
         },

@@ -7,15 +7,14 @@ new Vue({
         }
     },
     mounted() {
-        var self = this;
-        $.get('/api/v1/blog', function (result) {
-            if (result.data) {
-                self.blogs = result.data;
-            }
-        })
+    },
+    methods: {
+        renderData(data) {
+            this.blogs = data;
+        }
     },
     filters: {
-        formatTime: function(time) {
+        formatTime: function (time) {
             return moment(time).fromNow();
         }
     }
