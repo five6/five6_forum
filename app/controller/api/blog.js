@@ -40,9 +40,11 @@ module.exports = () => {
       };
     }
     async reply(ctx) {
+      const reply = await ctx.service.blog.reply();
       ctx.body = {
         code: 0,
-        data: [],
+        data: reply,
+        msg: '回复成功！',
       };
     }
   }

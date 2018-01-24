@@ -1,0 +1,91 @@
+{% extends "_layouts/admin.html" %}
+
+{% block style %}
+   <style type="text/css">
+        [v-cloak] { display: none; }
+        #app img {
+            max-width: 100%;
+        }
+        .pointer{
+            cursor: pointer;
+        }
+        .h-30{
+            min-height: 30px;
+        }
+        .editable {
+            padding: 5px;
+            background: #f6f6f6;
+            border: 1px solid #ebebeb;
+        }
+   </style>
+{% endblock %}
+{% block admin %}
+{% include "../vue_components/pagination.html" %}
+
+<div class="row" id="app" v-cloak>
+    <div class="col-lg-10" >
+        <div class="ibox">
+            <div class="ibox-content">
+                <a class="btn-link">
+                    <h2>
+                        ${blog.title}
+                    </h2>
+                </a>
+                <div class="small m-b-xs">
+                    <strong>${blog.author_user}</strong> <span class="text-muted"><i class="fa fa-clock-o"></i>${blog.create_at | formatTime}</span>
+                </div>
+                <p v-html="blog.content" />
+                <hr/>
+                <div class="row">
+                    <div class="col-md-6"></div>
+                    <div class="col-md-6">
+                        <div v-show="showReply" class="small text-right">
+                            <div @click="hideReplyList" class="pointer">
+                                <a class="text-navy">收起评论</a>
+                            </div>
+                        </div>
+                        <div v-show="!showReply" class="small text-right">
+                            <div @click="showReplyList" class="pointer"> 
+                                <i class="fa fa-comments-o"> </i> ${blog.reply_count} 条评论 
+                            </div>
+                            <i class="fa fa-eye"> </i> ${blog.visit_count} 个阅读
+                        </div>
+                    </div>
+                </div>
+                <div v-show="showReply" class="row reply-container">
+                    <div class="col-lg-12">
+                        <h3>${blog.reply_count} 条评论 </h3>
+                        <template v-for="(reply, index) of blog.replies">
+                            <div class="social-feed-box">
+                                <div class="social-avatar">
+                                    <a class="pull-left">
+                                        <img alt="image" :src="reply.avatar | formatAvatar"/>
+                                    </a>
+                                    <div class="media-body">
+                                        <a>
+                                            ${reply.author_id}
+                                        </a>
+                                        <small class="text-muted">${reply.create_at | formatTime}</small>
+                                    </div>
+                                </div>
+                                <div class="social-body">
+                                    <p v-html="reply.content" />
+                                </div>
+                            </div>
+                        </template>
+                        <div @blur="blur($event)" @focus="focus($event)" contentEditable class="h-30 editable">
+                        </div>
+                        <button @click="replyBlog(blog._id)" type="button" class="btn btn-primary btn-xs m-t-sm">评论</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script src="/public/js/blog/detail.js"></script>
+{% endblock %}
+

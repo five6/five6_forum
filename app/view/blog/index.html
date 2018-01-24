@@ -3,20 +3,17 @@
 {% block style %}
    <style type="text/css">
         [v-cloak] { display: none; }
-        .col-lg-4 img {
+        #app img {
             max-width: 100%;
         }
         .pointer{
             cursor: pointer;
         }
-        .reply-container {
-            max-height: 500px;
-
-        }
         .h-30{
             min-height: 30px;
         }
         .editable {
+            padding: 5px;
             background: #f6f6f6;
             border: 1px solid #ebebeb;
         }
@@ -26,8 +23,8 @@
 {% include "../vue_components/pagination.html" %}
 
 <div class="row" id="app" v-cloak>
-    <template v-for="(blog, index) in blogs">
-        <div class="col-lg-4">
+    <div class="col-lg-8">
+        <template v-for="(blog, index) in blogs">
             <div class="ibox">
                 <div class="ibox-content">
                     <a class="btn-link">
@@ -63,11 +60,11 @@
                                 <div class="social-feed-box">
                                     <div class="social-avatar">
                                         <a class="pull-left">
-                                            <img alt="image" :src="reply.avatar"/>
+                                            <img alt="image" :src="reply.avatar | formatAvatar"/>
                                         </a>
                                         <div class="media-body">
                                             <a>
-                                                ${reply.nickname}
+                                                ${reply.author_id}
                                             </a>
                                             <small class="text-muted">${reply.create_at | formatTime}</small>
                                         </div>
@@ -77,19 +74,20 @@
                                     </div>
                                 </div>
                             </template>
-                            <hr/>
-                            <div @blur="blur($event,blog._id)" @focus="focus(blog._id)" contentEditable class="h-30 editable">
+                            <div @blur="blur($event,blog._id)" @focus="focus($event,blog._id)" contentEditable class="h-30 editable">
                                 ${placeholders[blog._id]}
                             </div>
+                            <button @click="replyBlog(blog._id)" type="button" class="btn btn-primary btn-xs m-t-sm">评论</button>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </template>
-    <pagination-component @renderdata="renderData" :size="10" link="/api/v1/blog"  />
+        </template>
+        <pagination-component @renderdata="renderData" :size="10" link="/api/v1/blog"  />
+    </div>
+    <div class="col-lg-4">
+    </div>
 </div>
-
 
 {% endblock %}
 

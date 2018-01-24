@@ -3,7 +3,7 @@ new Vue({
     delimiters: ['${', '}'],
     data() {
         return {
-            blogs: [],
+            blog: null,
             placeholders: [],
             showReply: [],
             focusing: null,
@@ -19,45 +19,34 @@ new Vue({
     mounted() {
     },
     methods: {
-        blur(e, _id) {
+        blur(e) {
             if (!e.target.innerText.length)
-                this.placeholders[_id] = '写下你的评论...';
+                this.placeholder = '写下你的评论...';
             this.$forceUpdate();
         },
-        focus(e, _id) {
-            this.placeholders[_id] = '';
+        focus(e) {
+            this.placeholder = '';
             this.focusing = e.target;
             this.$forceUpdate();
         },
         hideReplyList(_id) {
-            delete this.showReply[_id];
+            this.showReply = false;
             this.$forceUpdate();
         },
-        showReplyList(_id) {
-            this.showReply[_id] = true;
+        showReplyList() {
+            this.showReply = true;
             this.$forceUpdate();
         },
-        replyBlog(blogId) {
+        replyBlog() {
             if (this.focusing) {
                 this.reply.content = this.focusing.innerHTML;
-                this.reply.blogId = blogId;
-                this.saveToServer(this.reply, this.replyUrl.replace(':_id', blogId));
+                this.reply.blogId = this.blog._id;
+                this.saveToServer(this.reply, this.replyUrl.replace(':_id', this.blog._id));
             }
         },
-        renderData(data) {
-            this.blogs = data;
-            _.each(data, d => {
-                this.placeholders[d._id] = '写下你的评论...'
-            });
-        },
         rerenderReply(blogId, reply) {
-            this.blogs = _.map(this.blogs, blog => {
-                if (blog._id === blogId) {
-                    blog.reply_count++;
-                    blog.replies.push(reply);
-                }
-                return blog;
-            })
+            this.blog.reply_count++;
+            this.blog.replies.push(reply);
             this.$forceUpdate();
         },
         saveToServer(data, url) {
