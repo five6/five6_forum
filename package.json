@@ -1,7 +1,7 @@
 {
-  "name": "myblog",
+  "name": "five6",
   "version": "1.0.0",
-  "description": "my blog",
+  "description": "five6",
   "private": true,
   "dependencies": {
     "egg": "^2.0.0",

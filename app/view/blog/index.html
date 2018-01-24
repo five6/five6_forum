@@ -6,6 +6,20 @@
         .col-lg-4 img {
             max-width: 100%;
         }
+        .pointer{
+            cursor: pointer;
+        }
+        .reply-container {
+            max-height: 500px;
+
+        }
+        .h-30{
+            min-height: 30px;
+        }
+        .editable {
+            background: #f6f6f6;
+            border: 1px solid #ebebeb;
+        }
    </style>
 {% endblock %}
 {% block admin %}
@@ -25,17 +39,47 @@
                         <strong>${blog.author_user}</strong> <span class="text-muted"><i class="fa fa-clock-o"></i>${blog.create_at | formatTime}</span>
                     </div>
                     <p v-html="blog.content" />
+                    <hr/>
                     <div class="row">
+                        <div class="col-md-6"></div>
                         <div class="col-md-6">
-                            <button class="btn btn-primary btn-xs" type="button">详情</button>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="small text-right">
-                                <!-- <h5>Stats:</h5> -->
-                                <div> 
+                            <div v-show="showReply[blog._id]" class="small text-right">
+                                <div @click="hideReplyList(blog._id)" class="pointer">
+                                    <a class="text-navy">收起评论</a>
+                                </div>
+                            </div>
+                            <div v-show="!showReply[blog._id]" class="small text-right">
+                                <div @click="showReplyList(blog._id)" class="pointer"> 
                                     <i class="fa fa-comments-o"> </i> ${blog.reply_count} 条评论 
                                 </div>
                                 <i class="fa fa-eye"> </i> ${blog.visit_count} 个阅读
+                            </div>
+                        </div>
+                    </div>
+                    <div v-show="showReply[blog._id]" class="row reply-container">
+                        <div class="col-lg-12">
+                            <h3>${blog.reply_count} 条评论 </h3>
+                            <template v-for="(reply, index) of blog.replies">
+                                <div class="social-feed-box">
+                                    <div class="social-avatar">
+                                        <a class="pull-left">
+                                            <img alt="image" :src="reply.avatar"/>
+                                        </a>
+                                        <div class="media-body">
+                                            <a>
+                                                ${reply.nickname}
+                                            </a>
+                                            <small class="text-muted">${reply.create_at | formatTime}</small>
+                                        </div>
+                                    </div>
+                                    <div class="social-body">
+                                        <p v-html="reply.content" />
+                                    </div>
+                                </div>
+                            </template>
+                            <hr/>
+                            <div @blur="blur($event,blog._id)" @focus="focus(blog._id)" contentEditable class="h-30 editable">
+                                ${placeholders[blog._id]}
                             </div>
                         </div>
                     </div>
