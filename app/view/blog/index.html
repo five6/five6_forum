@@ -71,6 +71,12 @@
                                     </div>
                                     <div class="social-body">
                                         <p v-html="reply.content" />
+                                        <div class="" @mouseover ="onMouseOver(reply._id)" @mouseout="onMouseOut(reply._id)">                                                <div class="" @mouseover ="onMouseOver(reply._id)" @>
+                                            <a class="btn btn-xs text-navy"><i class="fa fa-thumbs-o-up"></i> ${reply.star_count}</a>
+                                            <a v-show="hoverReply[reply._id]" class="btn btn-xs text-navy m-l-md"><i class="fa fa-reply"></i> 回复</a>
+                                            <a v-show="hoverReply[reply._id]" class="btn btn-xs text-navy"><i class="fa fa-thumbs-o-down"></i> 踩</a>
+                                            <a v-show="hoverReply[reply._id]" class="btn btn-xs text-navy"><i class="fa fa-bell-o"></i> 举报</a>
+                                        </div>
                                     </div>
                                 </div>
                             </template>

@@ -4,7 +4,9 @@ new Vue({
     data() {
         return {
             blogs: [],
+            hoverReply:[],
             placeholders: [],
+            inputing: [],
             showReply: [],
             focusing: null,
             replyUrl: '/api/v1/blog/:_id/reply',
@@ -19,14 +21,28 @@ new Vue({
     mounted() {
     },
     methods: {
+        onMouseOver(_id){
+            this.hoverReply[_id] = true;
+            this.$forceUpdate();
+        },
+        onMouseOut(_id) {
+            this.hoverReply[_id] = false;
+            this.$forceUpdate();
+        },
         blur(e, _id) {
+            var self = this;
             if (!e.target.innerText.length)
                 this.placeholders[_id] = '写下你的评论...';
+            setTimeout(function () {
+                self.inputing[_id] = false;
+                self.$forceUpdate();
+            }, 1000)
             this.$forceUpdate();
         },
         focus(e, _id) {
             this.placeholders[_id] = '';
             this.focusing = e.target;
+            this.inputing[_id] = true;
             this.$forceUpdate();
         },
         hideReplyList(_id) {
@@ -54,6 +70,8 @@ new Vue({
             this.blogs = _.map(this.blogs, blog => {
                 if (blog._id === blogId) {
                     blog.reply_count++;
+                    if (!blog.replies)
+                        blog.replies = [];
                     blog.replies.push(reply);
                 }
                 return blog;

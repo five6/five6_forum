@@ -8,6 +8,7 @@ module.exports = app => {
     blogId: { type: String },
     replyId: { type: String },
     author_id: { type: String },
+    star_count: { type: Number, default: 0 },
     create_at: { type: Date, default: Date.now },
     update_at: { type: Date, default: Date.now },
     deleted: { type: Boolean, default: false },

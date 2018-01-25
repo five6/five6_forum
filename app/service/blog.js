@@ -12,7 +12,7 @@ module.exports = () => {
       return result;
     }
     async list() {
-      console.log(this.ctx.query);
+      const self = this;
       const page = parseInt(this.ctx.query.page || 1);
       const size = parseInt(this.ctx.query.per_page || 20);
       const skip = (page - 1) * size;
@@ -21,6 +21,13 @@ module.exports = () => {
       let blogs = await this.ctx.model.Blog.find(cond).skip(skip).limit(size).
         lean();
       const _count = await this.ctx.model.Blog.count({});
+
+      // 修改view count
+      const viewArray = [];
+      _.each(blogs, blog => {
+        viewArray.push(self.ctx.model.Blog.updateOne({ _id: self.ctx.toObjectID(blog._id) }, { $inc: { visit_count: 1 } }));
+      });
+      await Promise.all(viewArray);
       // blog's replies
       const blogIds = [];
       const replyObj = {};
@@ -59,7 +66,7 @@ module.exports = () => {
       blogId = this.ctx.toObjectID(blogId);
       await Promise.all([
         reply.save(),
-        this.ctx.model.Blog.updateOne({ _id: blogId }, { $inc: { reply_count: 1 } }),
+        this.ctx.model.Blog.updateOne({ _id: blogId }, { $set: { last_reply: reply.author_id, last_reply_at: new Date() }, $inc: { reply_count: 1 } }),
       ]);
       return await reply.save();
     }
