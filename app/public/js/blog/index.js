@@ -23,8 +23,13 @@ new Vue({
     mounted() {
     },
     methods: {
-        starBlogAndReply(r_b, flag) {
-            r_b.star_count = r_b.star_count ? r_b.star_count + 1 : 1;
+        starReply(reply, flag) {
+            var index = reply.stars.indexOf(this.user_name);
+            if(index > -1) {
+                reply.stars.splice(index, 1);
+            } else {
+                reply.stars.push(this.user_name);
+            }
             this.$forceUpdate();
         },
         showSessionModal(reply) {
@@ -33,7 +38,7 @@ new Vue({
         reply_blur(e, reply) {
             if (!e.target.innerText.length)
                 this.reply_placeholders[reply._id] = '回复' + reply.author_id;
-            this.$forceUpdate();
+            this .$forceUpdate();
         },
         reply_focus(e, _id) {
             this.reply_placeholders[_id] = '';
