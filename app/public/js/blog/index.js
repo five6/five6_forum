@@ -23,6 +23,9 @@ new Vue({
     mounted() {
     },
     methods: {
+        showSessionModal(reply){
+            $('#id_modal_session').modal('show');
+        },
         reply_blur(e, reply) {
             if (!e.target.innerText.length)
                 this.reply_placeholders[reply._id] = '回复' + reply.author_id;

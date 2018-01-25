@@ -17,6 +17,9 @@
             background: #f6f6f6;
             border: 1px solid #ebebeb;
         }
+        .reply-info{
+            color: #8590a6;
+        }
    </style>
 {% endblock %}
 {% block admin %}
@@ -63,9 +66,20 @@
                                             <img alt="image" :src="reply.avatar | formatAvatar"/>
                                         </a>
                                         <div class="media-body">
+                                           <template v-if="reply.replyId">
                                             <a>
+                                                ${reply.author_id} 
+                                                <span class="m-l-xs m-r-xs reply-info">
+                                                    回复
+                                                </span>
                                                 ${reply.author_id}
                                             </a>
+                                           </template>
+                                           <template v-else>
+                                            <a>
+                                                ${reply.author_id} 
+                                            </a>
+                                           </template>
                                             <small class="text-muted">${reply.create_at | formatTime}</small>
                                         </div>
                                     </div>
@@ -74,8 +88,9 @@
                                         <div class="" @mouseover ="onMouseOver(reply._id)" @mouseout="onMouseOut(reply._id)"> 
                                             <a class="btn btn-xs text-navy"><i class="fa fa-thumbs-o-up"></i> ${reply.star_count}</a>
                                             <a @click="activeReply(reply)" v-show="hoverReply[reply._id]" class="btn btn-xs text-navy m-l-md"><i class="fa fa-reply"></i> 回复</a>
+                                            <a @click="showSessionModal(reply)" v-show="hoverReply[reply._id] && reply.replyId" class="btn btn-xs text-navy"><i class="fa fa-comment-o"></i> 查看对话</a>
                                             <a v-show="hoverReply[reply._id]" class="btn btn-xs text-navy"><i class="fa fa-thumbs-o-down"></i> 踩</a>
-                                            <a v-show="hoverReply[reply._id]" class="btn btn-xs text-navy"><i class="fa fa-bell-o"></i> 举报</a>
+                                            <a v-show="hoverReply[reply._id]" class="btn btn-xs text-danger"><i class="fa fa-bell-o"></i> 举报</a>
                                         </div>
                                         <div v-show="activeCurrentReply[reply._id]" class="m-t-sm">
                                             <div :ref="reply._id" @blur="reply_blur($event,reply)" @focus="reply_focus($event,reply._id)" contentEditable class="h-30 editable m-b-sm">
@@ -99,6 +114,24 @@
         <pagination-component @renderdata="renderData" :size="10" link="/api/v1/blog"  />
     </div>
     <div class="col-lg-4">
+    </div>
+    <div class="modal inmodal fade" id="id_modal_session" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-small">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title">
+                        查看对话
+                    </h4>
+                </div>
+                <div class="modal-body">
+                   
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
