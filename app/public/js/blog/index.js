@@ -23,7 +23,11 @@ new Vue({
     mounted() {
     },
     methods: {
-        showSessionModal(reply){
+        starBlogAndReply(r_b, flag) {
+            r_b.star_count = r_b.star_count ? r_b.star_count + 1 : 1;
+            this.$forceUpdate();
+        },
+        showSessionModal(reply) {
             $('#id_modal_session').modal('show');
         },
         reply_blur(e, reply) {
