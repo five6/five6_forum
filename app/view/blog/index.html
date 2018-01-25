@@ -22,7 +22,7 @@
 {% block admin %}
 {% include "../vue_components/pagination.html" %}
 
-<div class="row" id="app" v-cloak>
+<div class="row article" id="app" v-cloak>
     <div class="col-lg-8">
         <template v-for="(blog, index) in blogs">
             <div class="ibox">
@@ -71,11 +71,18 @@
                                     </div>
                                     <div class="social-body">
                                         <p v-html="reply.content" />
-                                        <div class="" @mouseover ="onMouseOver(reply._id)" @mouseout="onMouseOut(reply._id)">                                                <div class="" @mouseover ="onMouseOver(reply._id)" @>
+                                        <div class="" @mouseover ="onMouseOver(reply._id)" @mouseout="onMouseOut(reply._id)"> 
                                             <a class="btn btn-xs text-navy"><i class="fa fa-thumbs-o-up"></i> ${reply.star_count}</a>
-                                            <a v-show="hoverReply[reply._id]" class="btn btn-xs text-navy m-l-md"><i class="fa fa-reply"></i> 回复</a>
+                                            <a @click="activeReply(reply)" v-show="hoverReply[reply._id]" class="btn btn-xs text-navy m-l-md"><i class="fa fa-reply"></i> 回复</a>
                                             <a v-show="hoverReply[reply._id]" class="btn btn-xs text-navy"><i class="fa fa-thumbs-o-down"></i> 踩</a>
                                             <a v-show="hoverReply[reply._id]" class="btn btn-xs text-navy"><i class="fa fa-bell-o"></i> 举报</a>
+                                        </div>
+                                        <div v-show="activeCurrentReply[reply._id]" class="m-t-sm">
+                                            <div :ref="reply._id" @blur="reply_blur($event,reply)" @focus="reply_focus($event,reply._id)" contentEditable class="h-30 editable m-b-sm">
+                                                ${reply_placeholders[reply._id]}
+                                            </div>
+                                            <a @click="cancelReply(reply._id)" class="btn btn-xs text-warning">取消</a>
+                                            <a @click="replingBlogReply(blog,reply)" class="btn btn-xs text-navy">回复</a>
                                         </div>
                                     </div>
                                 </div>

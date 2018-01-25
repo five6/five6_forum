@@ -4,11 +4,13 @@ new Vue({
     data() {
         return {
             blogs: [],
-            hoverReply:[],
+            hoverReply: [],
             placeholders: [],
+            reply_placeholders: [],
             inputing: [],
             showReply: [],
             focusing: null,
+            activeCurrentReply: [],
             replyUrl: '/api/v1/blog/:_id/reply',
             reply: {
                 content: '',
@@ -21,22 +23,49 @@ new Vue({
     mounted() {
     },
     methods: {
-        onMouseOver(_id){
-            this.hoverReply[_id] = true;
+        reply_blur(e, reply) {
+            if (!e.target.innerText.length)
+                this.reply_placeholders[reply._id] = '回复' + reply.author_id;
             this.$forceUpdate();
+        },
+        reply_focus(e, _id) {
+            this.reply_placeholders[_id] = '';
+            this.$forceUpdate();
+        },
+        replingBlogReply(blog, reply) {
+            var self = this;
+            this.reply.content = $(this.$refs[reply._id]).html();
+            this.reply.blogId = blog._id;
+            this.reply.replyId = reply._id;
+            this.saveToServer(this.reply, this.replyUrl.replace(':_id', blog._id), function () {
+                delete self.activeCurrentReply[reply._id];
+                $(self.$refs[reply._id]).html('');
+                self.$forceUpdate();
+            });
+        },
+        cancelReply(_id) {
+            delete this.activeCurrentReply[_id];
+            this.$forceUpdate();
+        },
+        activeReply(reply) {
+            this.activeCurrentReply[reply._id] = true;
+            this.reply_placeholders[reply._id] = '回复' + reply.author_id;
+            this.$forceUpdate();
+        },
+        onMouseOver(_id) {
+            if (!this.activeCurrentReply[_id]) {
+                this.hoverReply[_id] = true;
+                this.$forceUpdate();
+            }
+
         },
         onMouseOut(_id) {
             this.hoverReply[_id] = false;
             this.$forceUpdate();
         },
         blur(e, _id) {
-            var self = this;
             if (!e.target.innerText.length)
                 this.placeholders[_id] = '写下你的评论...';
-            setTimeout(function () {
-                self.inputing[_id] = false;
-                self.$forceUpdate();
-            }, 1000)
             this.$forceUpdate();
         },
         focus(e, _id) {
@@ -78,7 +107,7 @@ new Vue({
             })
             this.$forceUpdate();
         },
-        saveToServer(data, url) {
+        saveToServer(data, url, callback) {
             var self = this;
             $.ajax({
                 type: 'post',
@@ -87,7 +116,15 @@ new Vue({
                 contentType: 'application/json',
                 success: function (reply) {
                     self.rerenderReply(data.blogId, reply.data);
-                    self.focusing.innerHTML = '';
+                    if (self.focusing) {
+                        self.focusing.innerHTML = '';
+                    }
+                    if (self.$refs[data._id]) {
+                        self.$refs[data._id].innerHTML = ''
+                    }
+                    if (typeof callback === 'function') {
+                        callback();
+                    }
                     console.log('success');
                 },
                 error: function (err) {
