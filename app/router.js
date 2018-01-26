@@ -39,7 +39,8 @@ module.exports = app => {
   router.post('/api/v1/blog', api, controller.api.blog.create);
   router.delete('/api/v1/blog/:_id', api, controller.api.blog.delete);
   router.put('/api/v1/blog/:_id', api, controller.api.blog.edit);
-  router.get('/api/v1/blog/', api, controller.api.blog.list);
+  router.get('/api/v1/blog', api, controller.api.blog.list);
+  router.get('/api/v1/blog/:_id', api, controller.api.blog.one);
   router.post('/api/v1/blog/:_id/reply', api, controller.api.blog.reply);
 
   // ********************************* 论坛  ********************************

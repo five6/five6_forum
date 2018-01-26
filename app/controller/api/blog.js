@@ -47,6 +47,14 @@ module.exports = () => {
         msg: '回复成功！',
       };
     }
+    async one(ctx) {
+      const blog = await ctx.service.blog.one();
+      ctx.body = {
+        code: 0,
+        data: blog,
+        msg: '获取成功！',
+      };
+    }
   }
   return BlogController;
 };

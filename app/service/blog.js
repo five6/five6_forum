@@ -16,6 +16,7 @@ module.exports = () => {
       const page = parseInt(this.ctx.query.page || 1);
       const size = parseInt(this.ctx.query.per_page || 20);
       const skip = (page - 1) * size;
+      const userIds = [];
       const cond = {};
       // blogs
       let blogs = await this.ctx.model.Blog.find(cond).skip(skip).limit(size).
@@ -25,9 +26,15 @@ module.exports = () => {
       // 修改view count
       const viewArray = [];
       _.each(blogs, blog => {
+        userIds.push(blog.author_user);
         viewArray.push(self.ctx.model.Blog.updateOne({ _id: self.ctx.toObjectID(blog._id) }, { $inc: { visit_count: 1 } }));
       });
       await Promise.all(viewArray);
+      const user_list = await this.ctx.model.User.find({ _id: { $in: userIds } }).lean();
+      const user_obj = {};
+      _.each(user_list, user => {
+        user_obj[user._id] = user.avatar;
+      });
       // blog's replies
       const blogIds = [];
       const replyObj = {};
@@ -39,13 +46,18 @@ module.exports = () => {
       }).lean();
 
       _.chain(replies).groupBy(b => {
+        userIds.push(b.author_user);
         return b.blogId;
       }).each((array, b) => {
         replyObj[b] = array;
       })
         .value();
       blogs = _.map(blogs, blog => {
-        blog.replies = replyObj[blog._id + ''];
+        blog.avatar = user_obj[blog.author_user];
+        blog.replies = _.map(replyObj[blog._id + ''], reply => {
+          reply.avatar = user_obj[blog.author_user];
+          return reply;
+        });
         return blog;
       });
       const result = {
@@ -69,6 +81,12 @@ module.exports = () => {
         this.ctx.model.Blog.updateOne({ _id: blogId }, { $set: { last_reply: reply.author_id, last_reply_at: new Date() }, $inc: { reply_count: 1 } }),
       ]);
       return await reply.save();
+    }
+    async one() {
+      const blogId = this.ctx.params._id;
+      const _id = this.ctx.toObjectID(blogId);
+      const blog = await this.ctx.model.Blog.findOne({ _id: _id });
+      return blog;
     }
   }
   return BlogService;
