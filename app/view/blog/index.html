@@ -67,16 +67,16 @@
                                     <div class="media-body">
                                         <template v-if="reply.replyId">
                                         <a>
-                                            ${reply.author_id} 
+                                            ${reply.author_user} 
                                             <span class="m-l-xs m-r-xs reply-info">
                                                 回复
                                             </span>
-                                            ${reply.author_id}
+                                            ${reply.author_user}
                                         </a>
                                         </template>
                                         <template v-else>
                                         <a>
-                                            ${reply.author_id} 
+                                            ${reply.author_user} 
                                         </a>
                                         </template>
                                         <small class="text-muted">${reply.create_at | formatTime}</small>

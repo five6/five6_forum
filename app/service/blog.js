@@ -74,7 +74,7 @@ module.exports = () => {
       body.blogId = blogId;
       const reply = new this.ctx.model.BlogReply(body);
       reply._id = this.ctx.toObjectID();
-      reply.author_id = this.ctx.user._id;
+      reply.author_user = this.ctx.user._id;
       blogId = this.ctx.toObjectID(blogId);
       await Promise.all([
         reply.save(),

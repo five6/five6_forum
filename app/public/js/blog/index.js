@@ -16,7 +16,7 @@ new Vue({
                 content: '',
                 replyId: '',
                 blogId: '',
-                author_id: '',
+                author_user: '',
             }
         }
     },
@@ -37,7 +37,7 @@ new Vue({
         },
         reply_blur(e, reply) {
             if (!e.target.innerText.length)
-                this.reply_placeholders[reply._id] = '回复' + reply.author_id;
+                this.reply_placeholders[reply._id] = '回复' + reply.author_user;
             this.$forceUpdate();
         },
         reply_focus(e, _id) {
@@ -56,7 +56,7 @@ new Vue({
                     content: '',
                     replyId: '',
                     blogId: '',
-                    author_id: '',
+                    author_user: '',
                 }
                 self.$forceUpdate();
             });
@@ -67,7 +67,7 @@ new Vue({
         },
         activeReply(reply) {
             this.activeCurrentReply[reply._id] = true;
-            this.reply_placeholders[reply._id] = '回复' + reply.author_id;
+            this.reply_placeholders[reply._id] = '回复' + reply.author_user;
             this.$forceUpdate();
         },
         onMouseOver(_id) {
@@ -110,7 +110,7 @@ new Vue({
                         content: '',
                         replyId: '',
                         blogId: '',
-                        author_id: '',
+                        author_user: '',
                     }
                 });
             }
