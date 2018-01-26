@@ -25,7 +25,7 @@ new Vue({
     methods: {
         starReply(reply, flag) {
             var index = reply.stars.indexOf(this.user_name);
-            if(index > -1) {
+            if (index > -1) {
                 reply.stars.splice(index, 1);
             } else {
                 reply.stars.push(this.user_name);
@@ -38,7 +38,7 @@ new Vue({
         reply_blur(e, reply) {
             if (!e.target.innerText.length)
                 this.reply_placeholders[reply._id] = '回复' + reply.author_id;
-            this .$forceUpdate();
+            this.$forceUpdate();
         },
         reply_focus(e, _id) {
             this.reply_placeholders[_id] = '';
@@ -52,6 +52,12 @@ new Vue({
             this.saveToServer(this.reply, this.replyUrl.replace(':_id', blog._id), function () {
                 delete self.activeCurrentReply[reply._id];
                 $(self.$refs[reply._id]).html('');
+                self.reply = {
+                    content: '',
+                    replyId: '',
+                    blogId: '',
+                    author_id: '',
+                }
                 self.$forceUpdate();
             });
         },
@@ -95,10 +101,18 @@ new Vue({
             this.$forceUpdate();
         },
         replyBlog(blogId) {
+            var self = this;
             if (this.focusing) {
                 this.reply.content = this.focusing.innerHTML;
                 this.reply.blogId = blogId;
-                this.saveToServer(this.reply, this.replyUrl.replace(':_id', blogId));
+                this.saveToServer(this.reply, this.replyUrl.replace(':_id', blogId), function () {
+                    self.reply = {
+                        content: '',
+                        replyId: '',
+                        blogId: '',
+                        author_id: '',
+                    }
+                });
             }
         },
         renderData(data) {

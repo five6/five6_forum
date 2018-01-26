@@ -59,49 +59,47 @@
                     <div v-show="showReply[blog._id]" class="row reply-container">
                         <div class="col-lg-12">
                             <h3>${blog.reply_count} 条评论 </h3>
-                            <template v-for="(reply, index) of blog.replies">
-                                <div class="social-feed-box">
-                                    <div class="social-avatar">
-                                        <a class="pull-left">
-                                            <img alt="image" :src="reply.avatar | formatAvatar"/>
+                            <div v-for="(reply, index) of blog.replies" :key="index" class="social-feed-box">
+                                <div class="social-avatar">
+                                    <a class="pull-left">
+                                        <img alt="image" :src="reply.avatar | formatAvatar"/>
+                                    </a>
+                                    <div class="media-body">
+                                        <template v-if="reply.replyId">
+                                        <a>
+                                            ${reply.author_id} 
+                                            <span class="m-l-xs m-r-xs reply-info">
+                                                回复
+                                            </span>
+                                            ${reply.author_id}
                                         </a>
-                                        <div class="media-body">
-                                           <template v-if="reply.replyId">
-                                            <a>
-                                                ${reply.author_id} 
-                                                <span class="m-l-xs m-r-xs reply-info">
-                                                    回复
-                                                </span>
-                                                ${reply.author_id}
-                                            </a>
-                                           </template>
-                                           <template v-else>
-                                            <a>
-                                                ${reply.author_id} 
-                                            </a>
-                                           </template>
-                                            <small class="text-muted">${reply.create_at | formatTime}</small>
-                                        </div>
-                                    </div>
-                                    <div class="social-body">
-                                        <p v-html="reply.content" />
-                                        <div class="" @mouseover ="onMouseOver(reply._id)" @mouseout="onMouseOut(reply._id)"> 
-                                            <a @click="starReply(reply)" class="btn btn-xs text-navy"><i class="fa fa-thumbs-o-up"></i> ${reply.star_count}</a>
-                                            <a @click="activeReply(reply)" v-show="hoverReply[reply._id]" class="btn btn-xs text-navy m-l-md"><i class="fa fa-reply"></i> 回复</a>
-                                            <a @click="showSessionModal(reply)" v-show="hoverReply[reply._id] && reply.replyId" class="btn btn-xs text-navy"><i class="fa fa-comment-o"></i> 查看对话</a>
-                                            <a v-show="hoverReply[reply._id]" class="btn btn-xs text-warning"><i class="fa fa-thumbs-o-down"></i> 踩</a>
-                                            <a v-show="hoverReply[reply._id]" class="btn btn-xs text-danger"><i class="fa fa-bell-o"></i> 举报</a>
-                                        </div>
-                                        <div v-show="activeCurrentReply[reply._id]" class="m-t-sm">
-                                            <div :ref="reply._id" @blur="reply_blur($event,reply)" @focus="reply_focus($event,reply._id)" contentEditable class="h-30 editable m-b-sm">
-                                                ${reply_placeholders[reply._id]}
-                                            </div>
-                                            <a @click="cancelReply(reply._id)" class="btn btn-xs text-warning">取消</a>
-                                            <a @click="replingBlogReply(blog,reply)" class="btn btn-xs text-navy">回复</a>
-                                        </div>
+                                        </template>
+                                        <template v-else>
+                                        <a>
+                                            ${reply.author_id} 
+                                        </a>
+                                        </template>
+                                        <small class="text-muted">${reply.create_at | formatTime}</small>
                                     </div>
                                 </div>
-                            </template>
+                                <div class="social-body">
+                                    <p v-html="reply.content"></p>
+                                    <div class="" @mouseover ="onMouseOver(reply._id)" @mouseout="onMouseOut(reply._id)"> 
+                                        <a @click="starReply(reply)" class="btn btn-xs text-navy"><i class="fa fa-thumbs-o-up"></i> ${reply.star_count}</a>
+                                        <a @click="activeReply(reply)" v-show="hoverReply[reply._id]" class="btn btn-xs text-navy m-l-md"><i class="fa fa-reply"></i> 回复</a>
+                                        <a @click="showSessionModal(reply)" v-show="hoverReply[reply._id] && reply.replyId" class="btn btn-xs text-navy"><i class="fa fa-comment-o"></i> 查看对话</a>
+                                        <a v-show="hoverReply[reply._id]" class="btn btn-xs text-warning"><i class="fa fa-thumbs-o-down"></i> 踩</a>
+                                        <a v-show="hoverReply[reply._id]" class="btn btn-xs text-danger"><i class="fa fa-bell-o"></i> 举报</a>
+                                    </div>
+                                    <div v-show="activeCurrentReply[reply._id]" class="m-t-sm">
+                                        <div :ref="reply._id" @blur="reply_blur($event,reply)" @focus="reply_focus($event,reply._id)" contentEditable class="h-30 editable m-b-sm">
+                                            ${reply_placeholders[reply._id]}
+                                        </div>
+                                        <a @click="cancelReply(reply._id)" class="btn btn-xs text-warning">取消</a>
+                                        <a @click="replingBlogReply(blog,reply)" class="btn btn-xs text-navy">回复</a>
+                                    </div>
+                                </div>
+                            </div>
                             <div @blur="blur($event,blog._id)" @focus="focus($event,blog._id)" contentEditable class="h-30 editable">
                                 ${placeholders[blog._id]}
                             </div>
