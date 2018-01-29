@@ -12,6 +12,7 @@ new Vue({
             focusing: null,
             activeCurrentReply: [],
             replyUrl: '/api/v1/blog/:_id/reply',
+            session_content: [],
             reply: {
                 content: '',
                 replyId: '',
@@ -32,8 +33,21 @@ new Vue({
             }
             this.$forceUpdate();
         },
-        showSessionModal(reply) {
+        showSessionModal(blog, reply) {
+            var replyId = reply._id;
+            this.session_content = [];
+            this.recursionFindReplySession(blog.replies, replyId);
             $('#id_modal_session').modal('show');
+        },
+        recursionFindReplySession(replies, replyId) {
+            var find = _.find(replies, r => {
+                return r._id === replyId;
+            })
+            if(find) {
+                this.session_content.unshift(find);
+                this.recursionFindReplySession(replies, find.replyId);
+            } 
+            console.log(find);
         },
         reply_blur(e, reply) {
             if (!e.target.innerText.length)
