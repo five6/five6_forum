@@ -36,7 +36,7 @@
                         </h2>
                     </a>
                     <div class="small m-b-xs">
-                        <strong>${blog.author_user}</strong> <span class="text-muted"><i class="fa fa-clock-o"></i>${blog.create_at | formatTime}</span>
+                        <strong class="m-r-md">${blog.author_user}</strong> <span class="text-muted"><i class="fa fa-clock-o"></i>&nbsp;${blog.create_at | formatTime}</span>
                     </div>
                     <p v-html="blog.content" />
                     <hr/>
@@ -87,7 +87,7 @@
                                 </div>
                                 <div class="social-body">
                                     <p v-html="reply.content"></p>
-                                    <div class="" @mouseover ="onMouseOver(reply._id)" @mouseout="onMouseOut(reply._id)"> 
+                                    <div v-if="reply.author_user !== user_name" @mouseover ="onMouseOver(reply._id)" @mouseout="onMouseOut(reply._id)"> 
                                         <a @click="starReply(reply)" class="btn btn-xs text-navy"><i class="fa fa-thumbs-o-up"></i> ${reply.star_count}</a>
                                         <a @click="activeReply(reply)" v-show="hoverReply[reply._id]" class="btn btn-xs text-navy m-l-md"><i class="fa fa-reply"></i> 回复</a>
                                         <a @click="showSessionModal(blog,reply)" v-show="hoverReply[reply._id] && reply.replyId" class="btn btn-xs text-navy"><i class="fa fa-comment-o"></i> 查看对话</a>
