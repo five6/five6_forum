@@ -30,7 +30,7 @@
         <template v-for="(blog, index) in blogs">
             <div class="ibox">
                 <div class="ibox-content">
-                    <a class="btn-link">
+                    <a title="点击查看详情" @click="showDetail(blog)" class="btn-link">
                         <h2>
                             ${blog.title}
                         </h2>

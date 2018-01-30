@@ -7,11 +7,13 @@
     },
     "globals": {
         "$": false,
-        "moment":false,
+        "moment": false,
         "EventBus": false,
         "Vue": false,
         "T": false,
-        "_": false
+        "_": false,
+        "$blogId": false,
+        "$topicId": false
     },
     "rules": {
         "no-console": "off",

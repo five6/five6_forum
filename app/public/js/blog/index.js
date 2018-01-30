@@ -24,6 +24,9 @@ new Vue({
     mounted() {
     },
     methods: {
+        showDetail(blog) {
+            window.location.href = '/blogs/' + blog._id;
+        },
         starReply(reply, flag) {
             var index = reply.stars.indexOf(this.user_name);
             if (index > -1) {
@@ -43,10 +46,10 @@ new Vue({
             var find = _.find(replies, r => {
                 return r._id === replyId;
             })
-            if(find) {
+            if (find) {
                 this.session_content.unshift(find);
                 this.recursionFindReplySession(replies, find.replyId);
-            } 
+            }
             console.log(find);
         },
         reply_blur(e, reply) {

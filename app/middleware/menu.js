@@ -8,7 +8,7 @@ module.exports = () => {
         link: '/forum', title: '论坛',
       },
       {
-        link: '/blog/index', title: '博客',
+        link: '/blogs', title: '博客',
       },
       {
         link: null, title: '个人中心',
@@ -23,7 +23,7 @@ module.exports = () => {
             link: '/user/blog', title: '我的博客',
           },
           {
-            link: '/blog/create', title: '写博客',
+            link: '/blogs/create', title: '写博客',
           },
           {
             link: '/topic/create', title: '发帖子',

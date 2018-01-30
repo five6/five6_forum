@@ -14,6 +14,10 @@ class BlogController extends Controller {
   async create(ctx) {
     await ctx.show('create');
   }
+  async detail(ctx) {
+    ctx.state.blogId = ctx.params._id;
+    await ctx.show('detail');
+  }
 }
 
 module.exports = BlogController;

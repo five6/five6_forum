@@ -88,6 +88,11 @@ module.exports = () => {
       const blog = await this.ctx.model.Blog.findOne({ _id: _id });
       return blog;
     }
+    async blog_replies() {
+      const blogId = this.ctx.params._id;
+      const replies = await this.ctx.model.Reply.find({ blogId: blogId }).lean();
+      return replies;
+    }
   }
   return BlogService;
 };

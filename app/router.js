@@ -33,14 +33,16 @@ module.exports = app => {
 
   //  ******* blog ********
   // page
-  router.get('/blog/create', page, menu, controller.page.blog.create);
-  router.get('/blog/index', page, menu, controller.page.blog.index);
+  router.get('/blogs/create', page, menu, controller.page.blog.create);
+  router.get('/blogs', page, menu, controller.page.blog.index);
+  router.get('/blogs/:_id', page, menu, controller.page.blog.detail);
   // api
   router.post('/api/v1/blog', api, controller.api.blog.create);
   router.delete('/api/v1/blog/:_id', api, controller.api.blog.delete);
   router.put('/api/v1/blog/:_id', api, controller.api.blog.edit);
   router.get('/api/v1/blog', api, controller.api.blog.list);
   router.get('/api/v1/blog/:_id', api, controller.api.blog.one);
+  router.get('/api/v1/blog/:_id/reply', api, controller.api.blog.blog_replies);
   router.post('/api/v1/blog/:_id/reply', api, controller.api.blog.reply);
 
   // ********************************* 论坛  ********************************
