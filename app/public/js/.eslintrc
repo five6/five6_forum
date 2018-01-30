@@ -13,7 +13,8 @@
         "T": false,
         "_": false,
         "$blogId": false,
-        "$topicId": false
+        "$topicId": false,
+        "$user_name": false
     },
     "rules": {
         "no-console": "off",

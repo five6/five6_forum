@@ -68,15 +68,18 @@
                                         <template v-if="reply.replyId">
                                         <a>
                                             ${reply.author_user} 
+                                            ${formatIfMeOrAuthor(blog,reply,reply.author_user)} 
                                             <span class="m-l-xs m-r-xs reply-info">
                                                 回复
                                             </span>
-                                            ${reply.author_user}
+                                            ${formatReplyId(blog,reply.replyId)}
+                                            ${formatIfMeOrAuthor(blog,reply)} 
                                         </a>
                                         </template>
                                         <template v-else>
                                         <a>
-                                            ${reply.author_user} 
+                                            ${reply.author_user}
+                                            ${formatIfMeOrAuthor(blog,reply, reply.author_user)} 
                                         </a>
                                         </template>
                                         <small class="text-muted">${reply.create_at | formatTime}</small>
@@ -135,15 +138,18 @@
                                 <template v-if="reply.replyId">
                                 <a>
                                     ${reply.author_user} 
+                                    ${formatIfMeOrAuthor(null,reply, reply.author_user)}
                                     <span class="m-l-xs m-r-xs reply-info">
                                         回复
                                     </span>
-                                    ${reply.author_user}
+                                    ${formatReplyId(null,reply.replyId)}
+                                    ${formatIfMeOrAuthor(null,reply)}
                                 </a>
                                 </template>
                                 <template v-else>
                                 <a>
-                                    ${reply.author_user} 
+                                    ${reply.author_user}
+                                    ${formatIfMeOrAuthor(null,reply, reply.author_user)} 
                                 </a>
                                 </template>
                                 <small class="text-muted">${reply.create_at | formatTime}</small>
@@ -162,6 +168,9 @@
 {% endblock %}
 
 {% block script %}
+<script type="text/javascript">
+    var $user_name = '{{ user_name}}';
+</script>
 <script src="/public/js/blog/index.js"></script>
 {% endblock %}
 

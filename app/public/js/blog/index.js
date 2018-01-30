@@ -3,6 +3,8 @@ new Vue({
     delimiters: ['${', '}'],
     data() {
         return {
+            selected_blog: null,
+            user_name: '',
             blogs: [],
             hoverReply: [],
             placeholders: [],
@@ -22,8 +24,53 @@ new Vue({
         }
     },
     mounted() {
+        this.user_name = $user_name;
     },
     methods: {
+        formatIfMeOrAuthor(blog, reply, flag) {
+            var reply_for;
+            var replyId = reply.replyId;
+            blog = blog || this.selected_blog;
+            if (blog) {
+                if (flag) {
+                    if (flag === this.user_name) {
+                        return '（我）'
+                    } else if (flag == blog.author_user) {
+                        return '（作者）';
+                    }
+                    return '';
+                } else {
+                    reply_for = _.find(blog.replies, r => {
+                        return r._id === replyId;
+                    })
+                    if (reply_for) {
+                        if (reply_for.author_user === this.user_name) {
+                            return '（我）'
+                        } else if (reply_for.author_user == blog.author_user) {
+                            return '（作者）';
+                        }
+                        return '';
+                    }
+                }
+            } else {
+                return '';
+            }
+        },
+        formatReplyId(blog, replyId) {
+            var reply;
+            if (blog) {
+                reply = _.find(blog.replies, r => {
+                    return r._id === replyId;
+                })
+                return reply ? reply.author_user : '';
+            } else {
+                reply = _.find(this.session_content, r => {
+                    return r._id === replyId;
+                })
+                return reply ? reply.author_user : '';
+            }
+
+        },
         showDetail(blog) {
             window.location.href = '/blogs/' + blog._id;
         },
@@ -38,6 +85,7 @@ new Vue({
         },
         showSessionModal(blog, reply) {
             var replyId = reply._id;
+            this.selected_blog = blog;
             this.session_content = [];
             this.recursionFindReplySession(blog.replies, replyId);
             $('#id_modal_session').modal('show');
