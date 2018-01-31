@@ -16,18 +16,18 @@ module.exports = () => {
           {
             link: '/user/profile', title: '我的主页',
           },
-          {
-            link: '/user/topic', title: '我的主题文章',
-          },
-          {
-            link: '/user/blog', title: '我的博客',
-          },
+          // {
+          //   link: '/user/topic', title: '我的主题文章',
+          // },
+          // {
+          //   link: '/user/blog', title: '我的博客',
+          // },
           {
             link: '/blogs/create', title: '写博客',
           },
-          {
-            link: '/topic/create', title: '发帖子',
-          },
+          // {
+          //   link: '/topic/create', title: '发帖子',
+          // },
         ],
       },
     ];
