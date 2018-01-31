@@ -87,12 +87,12 @@
                                 </div>
                                 <div class="social-body">
                                     <p v-html="reply.content"></p>
-                                    <div v-if="reply.author_user !== user_name" @mouseover ="onMouseOver(reply._id)" @mouseout="onMouseOut(reply._id)"> 
-                                        <a @click="starReply(reply)" class="btn btn-xs text-navy"><i class="fa fa-thumbs-o-up"></i> ${reply.star_count}</a>
-                                        <a @click="activeReply(reply)" v-show="hoverReply[reply._id]" class="btn btn-xs text-navy m-l-md"><i class="fa fa-reply"></i> 回复</a>
+                                    <div @mouseover ="onMouseOver(reply._id)" @mouseout="onMouseOut(reply._id)"> 
+                                        <a @click="starReply(reply)" class="btn btn-xs text-navy"><i class="fa fa-thumbs-o-up"></i> ${reply.stars.length}</a>
+                                        <a @click="activeReply(reply)" v-show="hoverReply[reply._id] && reply.author_user !== user_name" class="btn btn-xs text-navy m-l-md"><i class="fa fa-reply"></i> 回复</a>
                                         <a @click="showSessionModal(blog,reply)" v-show="hoverReply[reply._id] && reply.replyId" class="btn btn-xs text-navy"><i class="fa fa-comment-o"></i> 查看对话</a>
-                                        <a v-show="hoverReply[reply._id]" class="btn btn-xs text-warning"><i class="fa fa-thumbs-o-down"></i> 踩</a>
-                                        <a v-show="hoverReply[reply._id]" class="btn btn-xs text-danger"><i class="fa fa-bell-o"></i> 举报</a>
+                                        <a v-show="hoverReply[reply._id] && (reply.author_user !== user_name)" class="btn btn-xs text-warning"><i class="fa fa-thumbs-o-down"></i> 踩</a>
+                                        <a v-show="hoverReply[reply._id] && reply.author_user !== user_name" class="btn btn-xs text-danger"><i class="fa fa-bell-o"></i> 举报</a>
                                     </div>
                                     <div v-show="activeCurrentReply[reply._id]" class="m-t-sm">
                                         <div :ref="reply._id" @blur="reply_blur($event,reply)" @focus="reply_focus($event,reply._id)" contentEditable class="h-30 editable m-b-sm">

@@ -14,6 +14,7 @@ new Vue({
             focusing: null,
             activeCurrentReply: [],
             replyUrl: '/api/v1/blog/:_id/reply',
+            starUrl: '/api/v1/blog/reply/:_id/star',
             session_content: [],
             reply: {
                 content: '',
@@ -75,13 +76,28 @@ new Vue({
             window.location.href = '/blogs/' + blog._id;
         },
         starReply(reply, flag) {
+            var self = this;
+            var stars = _.clone(reply.stars);
             var index = reply.stars.indexOf(this.user_name);
             if (index > -1) {
-                reply.stars.splice(index, 1);
+                stars.splice(index, 1);
             } else {
-                reply.stars.push(this.user_name);
+                stars.push(this.user_name);
             }
-            this.$forceUpdate();
+            $.ajax({
+                type: 'post',
+                url: this.starUrl.replace(':_id', reply._id),
+                data: JSON.stringify(stars),
+                contentType: 'application/json',
+                success: function () {
+                    reply.stars = stars;
+                    self.$forceUpdate();
+                    console.log('success');
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            })
         },
         showSessionModal(blog, reply) {
             var replyId = reply._id;

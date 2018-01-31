@@ -47,6 +47,14 @@ module.exports = () => {
         msg: '回复成功！',
       };
     }
+    async star(ctx) {
+      const star = await ctx.service.blog.star();
+      ctx.body = {
+        code: 0,
+        data: star,
+        msg: 'star成功！',
+      };
+    }
     async one(ctx) {
       const blog = await ctx.service.blog.one();
       ctx.body = {

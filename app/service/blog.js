@@ -82,6 +82,11 @@ module.exports = () => {
       ]);
       return await reply.save();
     }
+    async star() {
+      const replyId = this.ctx.params._id;
+      const body = this.ctx.request.body;
+      return await this.ctx.model.BlogReply.updateOne({ _id: this.ctx.toObjectID(replyId) }, { stars: body });
+    }
     async one() {
       const blogId = this.ctx.params._id;
       const _id = this.ctx.toObjectID(blogId);

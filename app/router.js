@@ -44,6 +44,7 @@ module.exports = app => {
   router.get('/api/v1/blog/:_id', api, controller.api.blog.one);
   router.get('/api/v1/blog/:_id/reply', api, controller.api.blog.blog_replies);
   router.post('/api/v1/blog/:_id/reply', api, controller.api.blog.reply);
+  router.post('/api/v1/blog/reply/:_id/star', api, controller.api.blog.star);
 
   // ********************************* 论坛  ********************************
   // page
