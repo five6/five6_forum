@@ -31,7 +31,7 @@ new Vue({
                 contentType: 'application/json',
                 success: function (e) {
                     console.log(e);
-                    location.href = '/user/blog';
+                    location.href = '/blogs';
                 },
                 error: function () {
                 }
