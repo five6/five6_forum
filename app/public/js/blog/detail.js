@@ -142,6 +142,7 @@ new Vue({
         },
         rerenderReply(reply) {
             this.replies.push(reply)
+            this.blog.reply_count++;
             this.$forceUpdate();
         },
         saveToServer(data, url, callback) {
