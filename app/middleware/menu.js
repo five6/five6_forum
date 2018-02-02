@@ -5,7 +5,7 @@ module.exports = () => {
   return function* (next) {
     const sidenav = [
       {
-        link: '/forum', title: '论坛',
+        link: '/forums', title: '论坛',
       },
       {
         link: '/blogs', title: '博客',

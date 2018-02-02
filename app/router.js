@@ -48,8 +48,8 @@ module.exports = app => {
 
   // ********************************* 论坛  ********************************
   // page
-  router.get('/forum', page, menu, controller.page.forum.main.index);
-  router.get('/forum/_id', page, menu, controller.page.forum.main.one);
+  router.get('/forums', page, menu, controller.page.forum.main.index);
+  router.get('/forums/_id', page, menu, controller.page.forum.main.one);
   router.get('/topic/create', page, menu, controller.page.forum.topic.create);
   // api
   router.post('/api/v1/topic', api, controller.api.forum.topic.create);
