@@ -9,7 +9,7 @@
    </style>
 {% endblock %}
 {% block admin %}
-<!-- {% include "../vue_components/pagination.html" %} -->
+{% include "../vue_components/pagination.html" %}
 
 <div class="row" id="app" v-cloak>
     <div class="col-lg-12">
@@ -26,25 +26,19 @@
                 </div>
             </div>
             <div class="ibox-content forum-container">
-                <div class="forum-title">
-                    <div class="pull-right forum-desc">
-                        <small>总帖子数: 320,800</small>
-                    </div>
-                    <h3>主版</h3>
-                </div>
-                
-                <div class="forum-item active">
+                <template v-for="(forum, index) of forums">
+                    <div @mouseover="mouseover(forum._id)" @mouseout="mouseout(forum._id)" :class="['forum-item', hovers[forum._id] ? 'active': '']">
                         <div class="row">
                             <div class="col-md-9">
                                 <div class="forum-icon">
                                     <i class="fa fa-shield"></i>
                                 </div>
-                                <a @click="showForumTopic" class="forum-item-title">说说你们家乡的年味</a>
-                                <div class="forum-sub-title">马上过春节了，你们家乡都有哪些不同的风俗呢？</div>
+                                <a :href="'/forums/'+ forum._id" class="forum-item-title">\{{forum.name}}</a>
+                                <div class="forum-sub-title">\{{forum.description}}</div>
                             </div>
                             <div class="col-md-1 forum-info">
                                 <span class="views-number">
-                                    1216
+                                    \{{forum.views}}
                                 </span>
                                 <div>
                                     <small>浏览</small>
@@ -52,15 +46,15 @@
                             </div>
                             <div class="col-md-1 forum-info">
                                 <span class="views-number">
-                                    368
+                                    \{{forums.topic_count}}
                                 </span>
                                 <div>
-                                    <small>话题</small>
+                                    <small>主题</small>
                                 </div>
                             </div>
                             <div class="col-md-1 forum-info">
                                 <span class="views-number">
-                                    140
+                                    \{{forums.post_count}}
                                 </span>
                                 <div>
                                     <small>帖子</small>
@@ -68,6 +62,45 @@
                             </div>
                         </div>
                     </div>
+                </template>
+                <pagination-component  @renderdata="renderData" :size="10" :link="forumsUrl"  />
+            </div>
+        </div>
+    </div>
+    <div class="modal inmodal fade" id="id_modal_forum" role="dialog" aria-hidden="true">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title">
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <div class="col-sm-12">
+                                    <label>名称</label>
+                                    <input class="form-control" v-model="forum.name">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <div class="col-sm-12">
+                                    <label>描述</label>
+                                    <textarea rows="3" class="form-control" v-model="forum.description"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" @click="btnSave" class="btn btn-primary">保存</button>
+                </div>
             </div>
         </div>
     </div>

@@ -3,18 +3,61 @@ new Vue({
     delimiters: ['${', '}'],
     data() {
         return {
-            topics: []
+            formUrl: '/api/v1/forum',
+            forums: [],
+            user_list: [],
+            hovers: [],
+            forumsUrl:'',
+            forum: {
+                author_user: '',
+                name: '',
+                description: '',
+                category: '',
+            }
         }
     },
     mounted() {
     },
     methods: {
-        createForum(){
-
+        mouseover: function (_id) {
+            this.hovers[_id] = true;
+            this.$forceUpdate();
         },
-        showForumTopic(_id) {
-            window.location.href = "/forum/" + _id
-        }
+        mouseout: function (_id) {
+            delete this.hovers[_id];
+            this.$forceUpdate();
+        },
+        setForumRid: function (item) {
+            this.forum.rid = item._id;
+            this.forum.rid_name = item.text;
+        },
+        btnSave: function () {
+            this.saveToServer()
+        },
+        saveToServer: function (callback) {
+            var self = this;
+            $.ajax({
+                type: 'post',
+                url: '/forums/api',
+                data: JSON.stringify(self.forum),
+                contentType: 'application/json',
+                success: function (ret) {
+                    if (typeof callback === 'function') {
+                        if (ret.code === 0) {
+                            callback(ret._id);
+                        }
+                    } else {
+                        window.location.href = '/forums'
+                    }
+                }
+            })
+        },
+        renderData: function (data) {
+            this.forums = data;
+        },
+        createForum: function () {
+            $('#id_modal_forum').modal('show');
+        },
     },
     filters: {
         formatTime: function (time) {
