@@ -48,15 +48,26 @@ module.exports = app => {
 
   // ********************************* 论坛  ********************************
   // page
-  router.get('/forums', page, menu, controller.page.forum.main.index);
-  router.get('/forums/_id', page, menu, controller.page.forum.main.one);
-  router.get('/topic/create', page, menu, controller.page.forum.topic.create);
+  router.get('/forums', page, menu, controller.page.forum.forums);
+  router.get('/forums/:_id', page, menu, controller.page.forum.topics);
+  router.get('/forums/:forum_id/topic/:topic_id', page, menu, controller.page.forum.topic);
   // api
-  router.post('/api/v1/topic', api, controller.api.forum.topic.create);
-  router.delete('/api/v1/topic/:_id', api, controller.api.forum.topic.delete);
-  router.put('/api/v1/topic/:_id', api, controller.api.forum.topic.edit);
-  router.get('/api/v1/topic/', api, controller.api.forum.topic.list);
-  router.post('/api/v1/topic/:_id/reply', api, controller.api.forum.topic.reply);
+  router.post('/api/v1/forum', api, controller.api.forum.createForum);
+  router.delete('/api/v1/forum/:_id', api, controller.api.forum.deleteForum);
+  router.put('/api/v1/forum/:_id', api, controller.api.forum.editForum);
+  router.get('/api/v1/forum', api, controller.api.forum.forumList);
+  router.get('/api/v1/forum/:_id', api, controller.api.forum.oneForum);
+
+  router.post('/api/v1/forum/:forum_id/topic', api, controller.api.forum.createTopic);
+  router.delete('/api/v1/forum/:forum_id/topic/:topic_id', api, controller.api.forum.deleteTopic);
+  router.put('/api/v1/forum/:forum_id/topic/:topic_id', api, controller.api.forum.editTopic);
+  router.get('/api/v1/forum/:forum_id/topic', api, controller.api.forum.topicList);
+  router.get('/api/v1/forum/:forum_id/topic/:topic_id', api, controller.api.forum.oneTopic);
+
+  router.post('/api/v1/forum/:forum_id/topic/:topic_id/post', api, controller.api.forum.createPost);
+  router.delete('/api/v1/forum/:forum_id/topic/:topic_id/post/post_id', api, controller.api.forum.deletePost);
+  router.get('/api/v1/forum/:forum_id/topic/:topic_id/post', api, controller.api.forum.postList);
+
 
   // 文件
   router.post('/api/v1/files', api, controller.common.files.files);

@@ -7,13 +7,17 @@ class ForumController extends Controller {
     super(config);
     this.ctx.prefixRouter = '/forum';
   }
-  async index(ctx) {
+  async forums(ctx) {
     ctx.logger.info('访问论坛主页');
-    await ctx.show('index');
+    await ctx.show('forums');
   }
-  async one(ctx) {
-    ctx.logger.info('访问');
+  async topics(ctx) {
+    ctx.logger.info('访问topics');
     await ctx.show('topics');
+  }
+  async topic(ctx) {
+    ctx.logger.info('访问topic');
+    await ctx.show('topic');
   }
 }
 

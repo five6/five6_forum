@@ -3,11 +3,10 @@ new Vue({
     delimiters: ['${', '}'],
     data() {
         return {
-            formUrl: '/api/v1/forum',
+            forumsUrl: '/api/v1/forum',
             forums: [],
             user_list: [],
             hovers: [],
-            forumsUrl:'',
             forum: {
                 author_user: '',
                 name: '',

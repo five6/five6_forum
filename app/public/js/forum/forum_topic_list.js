@@ -5,8 +5,8 @@ new Vue({
         return {
             username: '',
             placeholder: '',
-            forumsUrl: '/api/v1/forums/',
-            threadsUrl: '/api/v1/forums/' + $forum_id + '/threads',
+            forumsUrl: '/api/v1/forum/',
+            threadsUrl: '/api/v1/forum/' + $forum_id + '/topic',
             user_list: [],
             threads: [],
             threadSize: 10,
