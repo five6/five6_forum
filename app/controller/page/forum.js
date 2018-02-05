@@ -17,7 +17,7 @@ class ForumController extends Controller {
   }
   async topic(ctx) {
     ctx.logger.info('访问topic');
-    await ctx.show('topic');
+    await ctx.show('posts');
   }
 }
 

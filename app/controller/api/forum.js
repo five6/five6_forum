@@ -6,12 +6,13 @@ module.exports = () => {
   class ForumController extends Controller {
     async createForum(ctx) {
       const rule = {
+        category: { required: true, type: 'string' },
         title: { required: true, type: 'string' },
-        content: { required: true, type: 'string' },
+        description: { required: true, type: 'string' },
       };
       const errors = this.ctx.validate(rule, this.ctx.request.body);
       if (errors) {
-        this.ctx.body = { code: -1, message: '标题和内容必须' };
+        this.ctx.body = { code: -1, message: '请输入必填内容' };
       } else {
         const result = await ctx.service.topic.createForum(ctx);
         ctx.body = {
