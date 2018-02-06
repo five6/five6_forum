@@ -29,26 +29,64 @@ module.exports = () => {
       const size = parseInt(this.ctx.query.per_page || 20);
       const skip = (page - 1) * size;
       const forumIds = [];
-      const { forums, count } = await Promise.all([
+      const fidObj = {};
+      const ret = await Promise.all([
         this.ctx.model.Forum.find({}).skip(skip).limit(size).
           lean(),
         this.ctx.model.Forum.count({}),
       ]);
-
-      const { users, topic_count, post_count } = await Promise.all([
-        this.ctx.model.Users.find({
-          _id: {
-            $in: _.map(forums, f => {
-              return f.author_user;
-            }),
+      const forums = ret[0];
+      const count = ret[1];
+      _.each(forums, f => {
+        forumIds.push(f._id + '');
+      });
+      const aggregateResult = await Promise.all([
+        this.ctx.model.ForumTopic.aggregate([
+          { $match: { forum_id: { $in: forumIds } } }, {
+            $group: {
+              _id: {
+                forum_id: '$forum_id',
+              },
+              count: { $sum: 1 },
+            },
           },
-        }),
-        this.ctx.model.ForumTopic.aggregateForumTopicCount(),
-        this.ctx.model.ForumPost.aggregateForumPostCount(),
+        ]),
+        this.ctx.model.ForumPost.aggregate([
+          { $match: { forum_id: { $in: forumIds } } }, {
+            $group: {
+              _id: {
+                forum_id: '$forum_id',
+              },
+              count: { $sum: 1 },
+            },
+          },
+        ]),
       ]);
+      console.log(aggregateResult);
       // todo
+      _.each(forumIds, forum_id => {
+        const topicResult = _.find(aggregateResult[0], r => {
+          return r._id.forum_id === forum_id;
+        });
+        fidObj[forum_id] = {};
+        if (topicResult) {
+          fidObj[forum_id].topic_count = topicResult.count;
+        }
+        const postResult = _.find(aggregateResult[1], r => {
+          return r._id.forum_id === forum_id;
+        });
+        if (postResult) {
+          fidObj[forum_id].post_count = postResult.count;
+        }
+      });
+
       const result = {
-        data: forums,
+        code: 0,
+        data: _.map(forums, f => {
+          f.post_count = fidObj[f._id + ''].post_count;
+          f.topic_count = fidObj[f._id + ''].topic_count;
+          return f;
+        }),
         count: count,
         total_page: Math.ceil(count / size),
       };
@@ -59,7 +97,15 @@ module.exports = () => {
       return [];
     }
     async createTopic() {
-      return [];
+      const forum_id = this.ctx.params._id;
+      const body = this.ctx.request.body;
+      const topic = new this.ctx.model.ForumTopic(body);
+      topic.author_user = this.ctx.user._id;
+      topic._id = this.ctx.toObjectID();
+      topic.forum_id = forum_id;
+      topic.create_at = new Date();
+      const result = await topic.save();
+      return result;
     }
     async editTopic() {
       return [];

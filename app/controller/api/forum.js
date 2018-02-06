@@ -6,7 +6,7 @@ module.exports = () => {
   class ForumController extends Controller {
     async createForum(ctx) {
       const rule = {
-        category: { required: true, type: 'string' },
+        // category: { required: true, type: 'string' },
         title: { required: true, type: 'string' },
         description: { required: true, type: 'string' },
       };
@@ -14,7 +14,7 @@ module.exports = () => {
       if (errors) {
         this.ctx.body = { code: -1, message: '请输入必填内容' };
       } else {
-        const result = await ctx.service.topic.createForum(ctx);
+        const result = await ctx.service.forum.createForum(ctx);
         ctx.body = {
           code: 0,
           data: result,
@@ -34,11 +34,7 @@ module.exports = () => {
       };
     }
     async forumList(ctx) {
-      const result = await ctx.service.forum.forumList();
-      ctx.body = {
-        code: 0,
-        data: result,
-      };
+      ctx.body = await ctx.service.forum.forumList();
     }
     async oneForum(ctx) {
       ctx.body = {
@@ -47,10 +43,20 @@ module.exports = () => {
       };
     }
     async createTopic(ctx) {
-      ctx.body = {
-        code: 0,
-        data: [],
+      const rule = {
+        title: { required: true, type: 'string' },
+        content: { required: true, type: 'string' },
       };
+      const errors = this.ctx.validate(rule, this.ctx.request.body);
+      if (errors) {
+        this.ctx.body = { code: -1, message: '请输入必填内容' };
+      } else {
+        const result = await ctx.service.forum.createTopic(ctx);
+        ctx.body = {
+          code: 0,
+          data: result,
+        };
+      }
     }
     async deleteTopic(ctx) {
       ctx.body = {

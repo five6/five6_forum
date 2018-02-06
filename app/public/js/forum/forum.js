@@ -9,7 +9,7 @@ new Vue({
             hovers: [],
             forum: {
                 author_user: '',
-                name: '',
+                title: '',
                 description: '',
                 category: '',
             }
@@ -37,7 +37,7 @@ new Vue({
             var self = this;
             $.ajax({
                 type: 'post',
-                url: '/forums/api',
+                url: '/api/v1/forum',
                 data: JSON.stringify(self.forum),
                 contentType: 'application/json',
                 success: function (ret) {
@@ -46,7 +46,7 @@ new Vue({
                             callback(ret._id);
                         }
                     } else {
-                        window.location.href = '/forums'
+                        // window.location.href = '/forums'
                     }
                 }
             })

@@ -13,18 +13,6 @@ module.exports = app => {
     update_at: { type: Date, default: Date.now },
   });
   PostSchema.methods = {
-    aggregateForumTopicCount(cond) {
-      this.aggregate([
-        { $match: cond }, {
-          $group: {
-            _id: {
-              forum_id: '$forum_id',
-            },
-            count: { $sum: 1 },
-          },
-        },
-      ]);
-    },
   };
   return mongoose.model('ForumPost', PostSchema);
 };

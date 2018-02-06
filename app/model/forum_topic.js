@@ -17,19 +17,5 @@ module.exports = app => {
   TopicSchema.index({ create_at: -1 });
   TopicSchema.index({ author_user: 1, create_at: -1 });
 
-  TopicSchema.methods = {
-    aggregateForumTopicCount(cond) {
-      this.aggregate([
-        { $match: cond }, {
-          $group: {
-            _id: {
-              forum_id: '$forum_id',
-            },
-            count: { $sum: 1 },
-          },
-        },
-      ]);
-    },
-  };
   return mongoose.model('ForumTopic', TopicSchema);
 };
