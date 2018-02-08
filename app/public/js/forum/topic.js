@@ -6,20 +6,20 @@ new Vue({
             username: '',
             placeholder: '',
             forumsUrl: '/api/v1/forum/',
-            threadsUrl: '/api/v1/forum/' + $forum_id + '/topic',
+            topicsUrl: '/api/v1/forum/' + $forum_id + '/topic',
             user_list: [],
-            threads: [],
-            threadSize: 10,
+            topics: [],
+            topicSize: 10,
             forum: {},
-            thread: {
+            topic: {
                 _id: '',
                 title: '',
                 content: '',
-                fid: '',
+                forum_id: '',
                 created_by: '',
                 created_at: ''
             },
-            creatingThread: false,
+            creatingTopic: false,
             post: {
                 fid: '',
                 ftid: '',
@@ -34,16 +34,16 @@ new Vue({
         this.getForum();
     },
     methods: {
-        createThread: function () {
+        createTopic: function () {
             var self = this;
-            this.thread.created_at = new Date();
-            this.thread.created_by = this.username;
-            this.thread.fid = this.forum_id;
-            var html = $('#thread_summernote').summernote('code');
-            this.thread.content = html;
-            this.saveToServer(this.threadsUrl, this.thread, function (_id) {
-                var thread = _.clone(self.thread);
-                self.thread = {
+            this.topic.created_at = new Date();
+            this.topic.created_by = this.username;
+            this.topic.fid = this.forum_id;
+            var html = $('#topic_summernote').summernote('code');
+            this.topic.content = html;
+            this.saveToServer(this.topicsUrl, this.topic, function (_id) {
+                var topic = _.clone(self.topic);
+                self.topic = {
                     _id: '',
                     title: '',
                     content: '',
@@ -51,16 +51,16 @@ new Vue({
                     created_by: '',
                     created_at: ''
                 };
-                thread._id = _id;
-                self.threads.push(thread);
-                $('#thread_summernote').summernote('reset')
-                if (self.threads.length % self.threadSize === 0) {
+                topic._id = _id;
+                self.topics.push(topic);
+                $('#topic_summernote').summernote('reset')
+                if (self.topics.length % self.topicSize === 0) {
                     window.location.reload();
                 }
             });
         },
         renderData: function (data) {
-            this.threads = data;
+            this.topics = data;
         },
         saveToServer: function (url, data, callback) {
             $.ajax({
@@ -90,7 +90,7 @@ new Vue({
         initParams: function () {
             this.forum_id = $forum_id;
             this.username = $user_name;
-            // $('#thread_summernote').summernote({
+            // $('#topic_summernote').summernote({
             //     height: 150,
             //     placeholder: '在此输入内容',
             //     autoHeight: true,
