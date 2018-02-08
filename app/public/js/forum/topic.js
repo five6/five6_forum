@@ -90,12 +90,12 @@ new Vue({
         initParams: function () {
             this.forum_id = $forum_id;
             this.username = $user_name;
-            $('#thread_summernote').summernote({
-                height: 150,
-                placeholder: '在此输入内容',
-                autoHeight: true,
+            // $('#thread_summernote').summernote({
+            //     height: 150,
+            //     placeholder: '在此输入内容',
+            //     autoHeight: true,
 
-            });
+            // });
         }
     },
     filters: {

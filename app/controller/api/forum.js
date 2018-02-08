@@ -34,7 +34,11 @@ module.exports = () => {
       };
     }
     async forumList(ctx) {
-      ctx.body = await ctx.service.forum.forumList();
+      const list = await ctx.service.forum.forumList();
+      ctx.body = {
+        code: 0,
+        data: list,
+      };
     }
     async oneForum(ctx) {
       ctx.body = {

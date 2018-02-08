@@ -13,57 +13,8 @@
 
 <div class="row" id="app" v-cloak>
     <div class="col-lg-12">
-        <div class="wrapper wrapper-content animated fadeInRight">
-            <div class="ibox-content forum-post-container">
-                <div class="forum-post-info">
-                    <h4><span class="text-navy"><i class="fa fa-globe"></i> \{{forum.name}}</span>&nbsp;- <span class="text-muted">\{{forum.category}}</span></h4>
-                    <span>\{{forum.description}}</span>
-                </div>
-                <template v-for="(thread, index) of threads">
-                    <div class="media">
-                            <a class="forum-avatar" href="#">
-                                <img :src="thread.avatar | formatAvatar" class="img-circle" alt="image">
-                                <div class="author-info">
-                                    <strong>{{T 'forums.post'}}</strong> \{{thread.thread_count}}<br/>
-                                    \{{thread.created_by}}
-                                </div>
-                            </a>
-                            <div class="media-body">
-                                <h4 class="media-heading">\{{thread.title}} &nbsp;</h4>
-                                <span style="color:#cfcbcb">\{{thread.created_at | formatTime}}</span>
-                                <br/><br/>
-                                <p v-html="thread.content"></p>
-                            </div>
-                        </div>
-                </template>
-            </div>
-            <pagination-component previous="上一页" next="下一页" @renderdata="renderData" :size="threadSize" :link="threadsUrl"  />
-        </div>
-        <div class="ibox">
-            <div class="ibox-content">
-                <div class="m-l-md text-navy">
-                    {{T 'forums.create'}}
-                </div>
-                <div class="hr-line-dashed"></div>
-                <form role="form" class="form-horizontal">
-                    <div class="form-group">
-                        <div class="col-sm-12">
-                            <div class="col-sm-12">
-                                <input type="text" placeholder="标题" v-model="thread.title" maxlength="50"  class="form-control m-b-md" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-12">
-                            <div class="col-sm-12">
-                                <div id="thread_summernote" class="summernote">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <button type="button" @click="createThread" class="btn btn-primary btn-xs">{{T 'common.save'}}</button>
-                </form>
-            </div>
+        <div class="wrapper wrapper-content">
+           
         </div>
     </div>
 </div>
@@ -71,6 +22,9 @@
 {% endblock %}
 
 {% block script %}
-<script src="/public/js/forum/forum_topic.js"></script>
+<script type="text/javascript">
+    var $forum_id  = '{{ forum_id }}';
+    var $user_name = '{{ user_name}}';
+</script>
+<script  src="/public/js/forum/topic.js"></script>
 {% endblock %}
-
