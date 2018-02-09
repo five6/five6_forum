@@ -94,7 +94,9 @@ module.exports = () => {
       return result;
     }
     async oneForum() {
-      return [];
+      const _id = this.ctx.params._id;
+      await this.ctx.model.Forum.updateOne({ _id: this.ctx.toObjectID(_id) }, { $inc: { visit_count: 1 } });
+      return await this.ctx.model.Forum.findOne({ _id: this.ctx.toObjectID(_id) });
     }
     async createTopic() {
       const forum_id = this.ctx.params._id;

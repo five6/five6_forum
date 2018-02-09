@@ -1,4 +1,7 @@
-{% extends "_layouts/admin.html" %} {% block style %}
+{% extends "_layouts/admin.html" %}
+{% block style %}
+    <link href="/public/css/_lib/summernote/summernote.css" rel="stylesheet">
+    <link href="/public/css/_lib/summernote/summernote-bs3.css" rel="stylesheet">
 <style type="text/css">
     [v-cloak] {
         display: none;
@@ -85,9 +88,9 @@
                             </div>
                 </template>
             </div>
-            <pagination-component previous="上一页" next="下一页" @renderdata="renderData" :size="topicSize" :link="topicUrl"  />
+            <pagination-component previous="上一页" next="下一页" @renderdata="renderData" :size="topicSize" :link="topicsUrl"  />
         </div>
-        <div class="ibox">
+        <div class="wrapper wrapper-content animated fadeInRight">
             <div class="ibox-content">
                 <fieldset class="fieldset">
                     <legend>新建主题</legend>
@@ -117,6 +120,8 @@
 
 {% endblock %} 
 {% block script %}
+    <script src="/public/js/_lib/summernote/summernote.min.js"></script>
+    <script src="/public/js/_lib/summernote/summernote-zh-CN.js"></script>
     <script type="text/javascript">
         var $forum_id = '{{ forum_id }}';
         var $user_name = '{{ user_name}}';

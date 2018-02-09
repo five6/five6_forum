@@ -34,12 +34,16 @@ var app = new Vue({
 
         },
         btnSave: function ($event) {
+            if (!this.forum.title || !this.forum.description) {
+                toastr.warning('请输入板块标题和描述！', '创建失败');
+                return false;
+            }
             $('#id_modal_forum').modal('hide');
             this.saveToServer(function () {
-                toastr.success('即将刷新页面！','创建成功');
+                toastr.success('即将刷新页面！', '创建成功');
                 setTimeout(function () {
                     window.location.href = '/forums'
-                }, 1000)
+                }, 3000)
             })
         },
         saveToServer: function (callback) {

@@ -8,15 +8,15 @@ class ForumController extends Controller {
     this.ctx.prefixRouter = '/forum';
   }
   async forums(ctx) {
-    ctx.logger.info('访问论坛主页');
     await ctx.show('forums');
   }
   async topics(ctx) {
-    ctx.logger.info('访问topics');
+    ctx.state.forum_id = ctx.params._id;
     await ctx.show('topics');
   }
   async topic(ctx) {
-    ctx.logger.info('访问topic');
+    ctx.state.forum_id = ctx.params.forum_id;
+    ctx.state.topic_id = ctx.params.topic_id;
     await ctx.show('posts');
   }
 }

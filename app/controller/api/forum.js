@@ -41,9 +41,10 @@ module.exports = () => {
       };
     }
     async oneForum(ctx) {
+      const data = await ctx.service.forum.oneForum();
       ctx.body = {
         code: 0,
-        data: [],
+        forum: data,
       };
     }
     async createTopic(ctx) {

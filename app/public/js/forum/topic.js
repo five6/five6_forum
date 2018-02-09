@@ -5,7 +5,7 @@ new Vue({
         return {
             username: '',
             placeholder: '',
-            forumsUrl: '/api/v1/forum/',
+            forumUrl: '/api/v1/forum/' + $forum_id,
             topicsUrl: '/api/v1/forum/' + $forum_id + '/topic',
             user_list: [],
             topics: [],
@@ -20,7 +20,7 @@ new Vue({
                 created_at: ''
             },
             creatingTopic: false,
-            hover:[]
+            hover: []
         }
     },
     mounted() {
@@ -83,7 +83,7 @@ new Vue({
         },
         getForum() {
             var self = this;
-            $.get(this.forumsUrl + this.forum_id, function (result) {
+            $.get(this.forumUrl, function (result) {
                 if (result.forum) {
                     self.forum = result.forum;
                 }
@@ -93,6 +93,7 @@ new Vue({
             this.forum_id = $forum_id;
             this.username = $user_name;
             $('#topic_summernote').summernote({
+                lang:'zh-CN',
                 height: 150,
                 placeholder: '在此输入内容',
                 autoHeight: true,
