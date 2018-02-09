@@ -1,6 +1,7 @@
 {% extends "_layouts/admin.html" %}
 
 {% block style %}
+    <link href="/public/css/_lib/ladda/ladda-themeless.min.css">
    <style type="text/css">
         [v-cloak] { display: none; }
         .col-lg-4 img {
@@ -100,7 +101,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" @click="btnSave" class="btn btn-primary">保存</button>
+                    <button @click="btnSave" type="button" class="btn btn-primary">保存</button>
                 </div>
             </div>
         </div>
@@ -110,6 +111,9 @@
 {% endblock %}
 
 {% block script %}
+<script  src="/public/js/_lib/ladda/spin.min.js"></script>
+<script  src="/public/js/_lib/ladda/ladda.min.js"></script>
+<script  src="/public/js/_lib/ladda/ladda.jquery.min.js"></script>
 <script  src="/public/js/forum/forum.js"></script>
 {% endblock %}
 

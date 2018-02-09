@@ -1,4 +1,4 @@
-new Vue({
+var app = new Vue({
     el: "#app",
     delimiters: ['${', '}'],
     data() {
@@ -30,11 +30,21 @@ new Vue({
             this.forum.rid = item._id;
             this.forum.rid_name = item.text;
         },
-        btnSave: function () {
-            this.saveToServer()
+        forbiddenSaveButton() {
+
+        },
+        btnSave: function ($event) {
+            $('#id_modal_forum').modal('hide');
+            this.saveToServer(function () {
+                toastr.success('即将刷新页面！','创建成功');
+                setTimeout(function () {
+                    window.location.href = '/forums'
+                }, 1000)
+            })
         },
         saveToServer: function (callback) {
             var self = this;
+            this.forbiddenSaveButton();
             $.ajax({
                 type: 'post',
                 url: '/api/v1/forum',
@@ -45,8 +55,6 @@ new Vue({
                         if (ret.code === 0) {
                             callback(ret._id);
                         }
-                    } else {
-                        // window.location.href = '/forums'
                     }
                 }
             })
@@ -63,4 +71,8 @@ new Vue({
             return moment(time).fromNow();
         }
     }
+})
+
+$(function () {
+
 })

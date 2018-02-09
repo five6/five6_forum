@@ -14,7 +14,8 @@
         "_": false,
         "$blogId": false,
         "$topicId": false,
-        "$user_name": false
+        "$user_name": false,
+        "toastr":false
     },
     "rules": {
         "no-console": "off",

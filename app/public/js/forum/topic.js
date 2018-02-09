@@ -20,13 +20,7 @@ new Vue({
                 created_at: ''
             },
             creatingTopic: false,
-            post: {
-                fid: '',
-                ftid: '',
-                content: '',
-                created_at: '',
-                created_by: ''
-            }
+            hover:[]
         }
     },
     mounted() {
@@ -34,7 +28,15 @@ new Vue({
         this.getForum();
     },
     methods: {
-        createTopic: function () {
+        mouseover(_id) {
+            this.hover[_id] = true;
+            this.$forceUpdate();
+        },
+        mouseout(_id) {
+            delete this.hover[_id];
+            this.$forceUpdate();
+        },
+        createTopic() {
             var self = this;
             this.topic.created_at = new Date();
             this.topic.created_by = this.username;
@@ -59,10 +61,10 @@ new Vue({
                 }
             });
         },
-        renderData: function (data) {
+        renderData(data) {
             this.topics = data;
         },
-        saveToServer: function (url, data, callback) {
+        saveToServer(url, data, callback) {
             $.ajax({
                 type: 'post',
                 url: url,
@@ -79,7 +81,7 @@ new Vue({
                 }
             })
         },
-        getForum: function () {
+        getForum() {
             var self = this;
             $.get(this.forumsUrl + this.forum_id, function (result) {
                 if (result.forum) {
@@ -87,25 +89,25 @@ new Vue({
                 }
             });
         },
-        initParams: function () {
+        initParams() {
             this.forum_id = $forum_id;
             this.username = $user_name;
-            // $('#topic_summernote').summernote({
-            //     height: 150,
-            //     placeholder: '在此输入内容',
-            //     autoHeight: true,
+            $('#topic_summernote').summernote({
+                height: 150,
+                placeholder: '在此输入内容',
+                autoHeight: true,
 
-            // });
+            });
         }
     },
     filters: {
-        formatAvatar: function (avatar) {
+        formatAvatar(avatar) {
             if (avatar) {
                 return '/files/' + avatar;
             }
             return ''
         },
-        formatTime: function (time) {
+        formatTime(time) {
             if (time) {
                 return moment(time).format('YYYY-MM-DD HH:mm:ss')
             }
