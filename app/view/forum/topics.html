@@ -62,11 +62,11 @@
                                         <div class="forum-icon">
                                             <img class="avatar-img" :src="topic.avatar | formatAvatar">
                                         </div>
-                                        <a :href="'/forums/'+ forum_id + '/topic/'+ topic._id" class="forum-item-title">\${topic.title}</a>
+                                        <a :href="'/forums/'+ forum_id + '/topic/'+ topic._id" class="forum-item-title">${topic.title}</a>
                                         <div class="forum-sub-title">
-                                            ${topic.author_user} ${topic.create_at | formatTime}
+                                            ${topic.author_user} ${topic.create_at | formatTimeNow}
+                                            <a @click="removeTopic(index,topic._id)" v-if="username === topic.author_user" class="btn btn-xs text-danger"><i style="color:#999;"  class="fa fa-trash"></i></a>
                                         </div>
-                                        <a @click="removeTopic(index,topic._id)" v-if="username === topic.author_user && hover[topic._id] " class="btn btn-xs text-danger"><i style="color:red;"  class="fa fa-trash"></i></a>
                                     </div>
                                     <div class="col-md-1 forum-info">
                                         <span class="views-number">

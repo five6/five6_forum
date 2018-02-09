@@ -76,9 +76,10 @@ module.exports = () => {
       };
     }
     async topicList(ctx) {
+      const list = await ctx.service.forum.topicList();
       ctx.body = {
         code: 0,
-        data: [],
+        data: list,
       };
     }
     async oneTopic(ctx) {

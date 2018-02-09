@@ -38,28 +38,29 @@ new Vue({
         },
         createTopic() {
             var self = this;
-            this.topic.created_at = new Date();
-            this.topic.created_by = this.username;
-            this.topic.fid = this.forum_id;
             var html = $('#topic_summernote').summernote('code');
             this.topic.content = html;
+            if (!this.topic.title.length || !this.topic.content.length) {
+                toastr.warning('请输入标题和内容！', '创建失败');
+                return false;
+            }
             this.saveToServer(this.topicsUrl, this.topic, function (_id) {
                 var topic = _.clone(self.topic);
                 self.topic = {
-                    _id: '',
                     title: '',
                     content: '',
-                    fid: '',
-                    created_by: '',
-                    created_at: ''
                 };
                 topic._id = _id;
+                topic.author_user = self.username;
                 self.topics.push(topic);
                 $('#topic_summernote').summernote('reset')
                 if (self.topics.length % self.topicSize === 0) {
                     window.location.reload();
                 }
             });
+        },
+        removeTopic(){
+
         },
         renderData(data) {
             this.topics = data;
@@ -93,11 +94,10 @@ new Vue({
             this.forum_id = $forum_id;
             this.username = $user_name;
             $('#topic_summernote').summernote({
-                lang:'zh-CN',
+                lang: 'zh-CN',
                 height: 150,
                 placeholder: '在此输入内容',
-                autoHeight: true,
-
+                autoHeight: true
             });
         }
     },
@@ -106,13 +106,16 @@ new Vue({
             if (avatar) {
                 return '/files/' + avatar;
             }
-            return ''
+            return '/public/img/avatar/common.jpg'
         },
         formatTime(time) {
             if (time) {
                 return moment(time).format('YYYY-MM-DD HH:mm:ss')
             }
             return ''
+        },
+        formatTimeNow(time) {
+            return moment(time).fromNow();
         }
     }
 })

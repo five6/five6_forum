@@ -113,7 +113,28 @@ module.exports = () => {
       return [];
     }
     async topicList() {
-      return [];
+      const cond = {};
+      const page = parseInt(this.ctx.query.page || 1);
+      const size = parseInt(this.ctx.query.per_page || 20);
+      const skip = (page - 1) * size;
+      const fidObj = {};
+      const ret = await Promise.all([
+        this.ctx.model.ForumTopic.find(cond).skip(skip).limit(size).
+          lean(),
+        this.ctx.model.ForumTopic.count(cond),
+      ]);
+      const topics = ret[0];
+      const count = ret[1];
+      const result = {
+        code: 0,
+        data: _.map(topics, f => {
+          return f;
+        }),
+        count: count,
+        total_page: Math.ceil(count / size),
+      };
+      result.page = page;
+      return result;
     }
     async oneTopic() {
       return [];
