@@ -1,0 +1,107 @@
+{% extends "_layouts/admin.html" %}
+{% block style %}
+<style type="text/css">
+    [v-cloak] {
+        display: none;
+    }
+    .col-lg-4 img {
+        max-width: 100%;
+    }
+    .topic-content img {
+        max-width: 100% !important;
+    }
+    .editable {
+        float: none !important;
+        background: #f6f6f6;
+        border: 1px solid #ebebeb;
+    }
+    fieldset {
+        border: 1px solid #eeeeee !important;
+        margin: 0 2px !important;
+        padding: 0.35em 0.625em 0.75em !important;
+    }
+    fieldset legend {
+        border-bottom: transparent;
+        text-align: center;
+        width: auto;
+    }
+    .note-editor.note-frame {
+        border: 1px solid #eeeeee !important;
+    }
+    .avatar-img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+    }
+    .topic-content{
+        margin-top: 30px;
+    }
+</style>
+{% endblock %} 
+{% block admin %}
+{% include "../vue_components/pagination.html" %}
+
+<div class="row" id="app" v-cloak>
+    <div class="col-lg-12">
+        <div class="animated fadeInRight">
+            <div class="ibox-content forum-post-container">
+                <div class="">
+                    <ol class="breadcrumb">
+                        <li class="text-navy"><a href="/forums">${forum.title}</a></li>
+                        <li class="text-navy"><a :href="'/forums/' + forum._id">${topic.title}</a></li>
+                    </ol>
+                </div>
+                <div class="ibox-content">
+                    <a class="btn-link">
+                        <h2>
+                            ${topic.title}
+                        </h2>
+                    </a>
+                    <div class="small m-b-xs">
+                        <strong class="m-r-md">${topic.author_user}</strong> <span class="text-muted"><i class="fa fa-clock-o"></i>&nbsp;${topic.create_at | formatTimeNow}</span>
+                    </div>
+                    <p class="topic-content" v-html="topic.content" />
+                    <br/>
+                    <div class="row">
+                    
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h3>评论区</h3>
+                            <div v-for="(post, index) of posts" :key="index" class="social-feed-box">
+                                <div class="social-avatar">
+                                    <a class="pull-left">
+                                        <img alt="image" :src="post.avatar | formatAvatar"/>
+                                    </a>
+                                    <div class="media-body">
+                                        <a>
+                                            ${post.author_user} 
+                                        </a>
+                                        <small class="text-muted">${post.create_at | formatTime}</small>
+                                    </div>
+                                </div>
+                                <div class="social-body">
+                                    <p v-html="post.content"></p>
+                                </div>
+                            </div>
+                            <div title="写下你的评论..." ref="replyContent" contentEditable class="h-30 editable">
+                            </div>
+                            <button @click="createPost" type="button" class="btn btn-primary btn-xs m-t-sm">评论</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <pagination-component previous="上一页" next="下一页" @renderdata="renderData" :size="postSize" :link="postsUrl"  />
+        </div>
+    </div>
+</div>
+
+{% endblock %} 
+{% block script %}
+    <script type="text/javascript">
+        var $forum_id = '{{ forum_id }}';
+        var $user_name = '{{ user_name}}';
+        var $topic_id = '{{topic_id}}'
+    </script>
+    <script src="/public/js/forum/post.js"></script>
+{% endblock %}

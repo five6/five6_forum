@@ -62,7 +62,6 @@ module.exports = () => {
           },
         ]),
       ]);
-      console.log(aggregateResult);
       // todo
       _.each(forumIds, forum_id => {
         const topicResult = _.find(aggregateResult[0], r => {
@@ -117,7 +116,6 @@ module.exports = () => {
       const page = parseInt(this.ctx.query.page || 1);
       const size = parseInt(this.ctx.query.per_page || 20);
       const skip = (page - 1) * size;
-      const fidObj = {};
       const ret = await Promise.all([
         this.ctx.model.ForumTopic.find(cond).skip(skip).limit(size).
           lean(),
@@ -137,7 +135,9 @@ module.exports = () => {
       return result;
     }
     async oneTopic() {
-      return [];
+      const _id = this.ctx.params.topic_id;
+      await this.ctx.model.ForumTopic.updateOne({ _id: this.ctx.toObjectID(_id) }, { $inc: { visit_count: 1 } });
+      return await this.ctx.model.ForumTopic.findOne({ _id: this.ctx.toObjectID(_id) });
     }
     async createPost() {
       return [];
