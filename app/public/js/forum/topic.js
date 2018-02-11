@@ -59,7 +59,7 @@ new Vue({
                 }
             });
         },
-        removeTopic(){
+        removeTopic() {
 
         },
         renderData(data) {
@@ -74,7 +74,7 @@ new Vue({
                 success: function (ret) {
                     if (typeof callback === 'function') {
                         if (ret.code === 0) {
-                            callback(ret._id);
+                            callback(ret.data._id);
                         }
                     } else {
                         window.location.href = '/forums'
