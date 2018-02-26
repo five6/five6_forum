@@ -62,7 +62,6 @@ module.exports = () => {
           },
         ]),
       ]);
-      // todo
       _.each(forumIds, forum_id => {
         const topicResult = _.find(aggregateResult[0], r => {
           return r._id.forum_id === forum_id;
@@ -140,7 +139,17 @@ module.exports = () => {
       return await this.ctx.model.ForumTopic.findOne({ _id: this.ctx.toObjectID(_id) });
     }
     async createPost() {
-      return [];
+      const forum_id = this.ctx.params.forum_id;
+      const topic_id = this.ctx.params.topic_id;
+      const body = this.ctx.request.body;
+      const post = new this.ctx.model.ForumPost(body);
+      post.author_user = this.ctx.user._id;
+      post._id = this.ctx.toObjectID();
+      post.forum_id = forum_id;
+      post.topic_id = topic_id;
+      post.create_at = new Date();
+      const result = await post.save();
+      return result;
     }
     async deletePost() {
       return [];

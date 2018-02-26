@@ -90,9 +90,10 @@ module.exports = () => {
       };
     }
     async createPost(ctx) {
+      const data = await ctx.service.forum.createPost();
       ctx.body = {
         code: 0,
-        data: [],
+        data: data,
       };
     }
     async deletePost(ctx) {

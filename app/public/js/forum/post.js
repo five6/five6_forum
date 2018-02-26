@@ -3,23 +3,55 @@ new Vue({
     el: '#app',
     data() {
         return {
-            postSize:10,
+            postSize: 10,
             forumUrl: '/api/v1/forum/' + $forum_id,
-            topicUrl: '/api/v1/forum/' + $forum_id + '/topic/'+ $topic_id,
-            postsUrl:'/api/v1/forum/' + $forum_id + '/topic/'+ $topic_id +'/posts',
+            topicUrl: '/api/v1/forum/' + $forum_id + '/topic/' + $topic_id,
+            postsUrl: '/api/v1/forum/' + $forum_id + '/topic/' + $topic_id + '/post',
             forum: {},
             topic: {},
             posts: [],
             post: {}
         }
     },
-    mounted(){
+    mounted() {
         this.getForum();
         this.getTopic();
     },
     methods: {
+        saveToServer(content, callback) {
+            var url = this.postsUrl;
+            var self = this;
+            $.ajax({
+                type: 'post',
+                url: url,
+                data: JSON.stringify({
+                    content: content
+                }),
+                contentType: 'application/json',
+                success: function (ret) {
+                    if (typeof callback === 'function') {
+                        if (ret.code === 0) {
+                            callback(ret.data._id);
+                        }
+                    } else {
+                        window.location.href = self.topicUrl
+                    }
+                }
+            })
+        },
         createPost() {
-
+            var self = this;
+            var content = this.$refs.replyContent.innerHTML;
+            this.saveToServer(content, function (_id) {
+                self.posts.push({
+                    _id: _id,
+                    author_user: self.username,
+                    content: content
+                });
+                if (self.posts.length % self.postSize === 0) {
+                    window.location.reload();
+                }
+            })
         },
         renderData() {
 
