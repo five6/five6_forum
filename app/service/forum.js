@@ -98,7 +98,7 @@ module.exports = () => {
       return await this.ctx.model.Forum.findOne({ _id: this.ctx.toObjectID(_id) });
     }
     async createTopic() {
-      const forum_id = this.ctx.params._id;
+      const forum_id = this.ctx.params.forum_id;
       const body = this.ctx.request.body;
       const topic = new this.ctx.model.ForumTopic(body);
       topic.author_user = this.ctx.user._id;

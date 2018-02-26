@@ -65,7 +65,7 @@ module.exports = app => {
   router.get('/api/v1/forum/:forum_id/topic/:topic_id', api, controller.api.forum.oneTopic);
 
   router.post('/api/v1/forum/:forum_id/topic/:topic_id/post', api, controller.api.forum.createPost);
-  router.delete('/api/v1/forum/:forum_id/topic/:topic_id/post/post_id', api, controller.api.forum.deletePost);
+  router.delete('/api/v1/forum/:forum_id/topic/:topic_id/post/:post_id', api, controller.api.forum.deletePost);
   router.get('/api/v1/forum/:forum_id/topic/:topic_id/post', api, controller.api.forum.postList);
 
 
