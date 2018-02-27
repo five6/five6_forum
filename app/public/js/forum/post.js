@@ -14,6 +14,7 @@ new Vue({
         }
     },
     mounted() {
+        this.initParams();
         this.getForum();
         this.getTopic();
     },
@@ -41,12 +42,12 @@ new Vue({
         },
         createPost() {
             var self = this;
-            var content = this.$refs.replyContent.innerHTML;
-            this.saveToServer(content, function (_id) {
+            var html = $('#post_summernote').summernote('code');
+            this.saveToServer(html, function (_id) {
                 self.posts.push({
                     _id: _id,
                     author_user: self.username,
-                    content: content
+                    content: html
                 });
                 if (self.posts.length % self.postSize === 0) {
                     window.location.reload();
@@ -76,6 +77,12 @@ new Vue({
             this.forum_id = $forum_id;
             this.username = $user_name;
             this.topic_id = $topic_id;
+            $('#post_summernote').summernote({
+                lang: 'zh-CN',
+                height: 150,
+                placeholder: '在此输入内容',
+                autoHeight: true
+            });
         }
     },
     filters: {

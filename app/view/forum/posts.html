@@ -1,5 +1,7 @@
 {% extends "_layouts/admin.html" %}
 {% block style %}
+<link href="/public/css/_lib/summernote/summernote.css" rel="stylesheet">
+<link href="/public/css/_lib/summernote/summernote-bs3.css" rel="stylesheet">
 <style type="text/css">
     [v-cloak] {
         display: none;
@@ -66,11 +68,7 @@
                     <p class="topic-content" v-html="topic.content" />
                     <br/>
                     <div class="row">
-                    
-                    </div>
-                    <div class="row">
                         <div class="col-lg-12">
-                            <h3>评论区</h3>
                             <div v-for="(post, index) of posts" :key="index" class="social-feed-box">
                                 <div class="social-avatar">
                                     <a class="pull-left">
@@ -87,20 +85,35 @@
                                     <p v-html="post.content"></p>
                                 </div>
                             </div>
-                            <div title="写下你的评论..." ref="replyContent" contentEditable class="h-30 editable">
-                            </div>
-                            <button @click="createPost" type="button" class="btn btn-primary btn-xs m-t-sm">评论</button>
                         </div>
+                    </div>
+                    <div class="row">
+                        <form role="form" class="form-horizontal">
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <div class="col-sm-12">
+                                        <div id="post_summernote" class="summernote">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12  m-t-sm">
+                                        <button type="button" @click="createPost" class="btn btn-primary">提交回复</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
             <pagination-component previous="上一页" next="下一页" @renderdata="renderData" :size="postSize" :link="postsUrl"  />
         </div>
     </div>
+    
 </div>
 
 {% endblock %} 
 {% block script %}
+    <script src="/public/js/_lib/summernote/summernote.min.js"></script>
+    <script src="/public/js/_lib/summernote/summernote-zh-CN.js"></script>
     <script type="text/javascript">
         var $forum_id = '{{ forum_id }}';
         var $user_name = '{{ user_name}}';
