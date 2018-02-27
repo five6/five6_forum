@@ -111,10 +111,12 @@ module.exports = () => {
       return [];
     }
     async topicList() {
-      const cond = {};
       const page = parseInt(this.ctx.query.page || 1);
       const size = parseInt(this.ctx.query.per_page || 20);
       const skip = (page - 1) * size;
+      const cond = {
+        forum_id: this.ctx.params.forum_id,
+      };
       const ret = await Promise.all([
         this.ctx.model.ForumTopic.find(cond).skip(skip).limit(size).
           lean(),
