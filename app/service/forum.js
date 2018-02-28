@@ -175,7 +175,27 @@ module.exports = () => {
       return [];
     }
     async postList() {
-      return [];
+      const page = parseInt(this.ctx.query.page || 1);
+      const size = parseInt(this.ctx.query.per_page || 20);
+      const skip = (page - 1) * size;
+      const cond = {
+        topic_id: this.ctx.params.topic_id,
+      };
+      const ret = await Promise.all([
+        this.ctx.model.ForumPost.find(cond).skip(skip).limit(size).
+          lean(),
+        this.ctx.model.ForumPost.count(cond),
+      ]);
+      const posts = ret[0];
+      const count = ret[1];
+      const result = {
+        code: 0,
+        data: posts,
+        count: count,
+        total_page: Math.ceil(count / size),
+      };
+      result.page = page;
+      return result;
     }
   }
   return ForumService;

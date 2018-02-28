@@ -54,8 +54,8 @@ new Vue({
                 }
             })
         },
-        renderData() {
-
+        renderData(data) {
+            this.posts = data;
         },
         getForum() {
             var self = this;

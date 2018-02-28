@@ -7,6 +7,7 @@ module.exports = app => {
     content: { type: String },
     forum_id: { type: String },
     topic_id: { type: String },
+    author_user: { type: String },
     post_id: { type: String, default: '' }, // 回复其他的回复
     author_id: { type: String },
     create_at: { type: Date, default: Date.now },

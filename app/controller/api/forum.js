@@ -103,9 +103,10 @@ module.exports = () => {
       };
     }
     async postList(ctx) {
+      const list = await ctx.service.forum.postList();
       ctx.body = {
         code: 0,
-        data: [],
+        data: list,
       };
     }
   }
