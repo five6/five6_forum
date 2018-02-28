@@ -66,7 +66,7 @@ module.exports = () => {
         const topicResult = _.find(aggregateResult[0], r => {
           return r._id.forum_id === forum_id;
         });
-        fidObj[forum_id] = {};
+        fidObj[forum_id] = fidObj[forum_id] || {};
         if (topicResult) {
           fidObj[forum_id].topic_count = topicResult.count;
         }
@@ -77,7 +77,6 @@ module.exports = () => {
           fidObj[forum_id].post_count = postResult.count;
         }
       });
-
       const result = {
         code: 0,
         data: _.map(forums, f => {
