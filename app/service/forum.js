@@ -121,12 +121,31 @@ module.exports = () => {
           lean(),
         this.ctx.model.ForumTopic.count(cond),
       ]);
+
       const topics = ret[0];
       const count = ret[1];
+      const topicIds = [];
+      _.each(topics, t => {
+        topicIds.push(t._id + '');
+      });
+      const aggregateResult = await this.ctx.model.ForumPost.aggregate([
+        { $match: { topic_id: { $in: topicIds } } }, {
+          $group: {
+            _id: {
+              topic_id: '$topic_id',
+            },
+            count: { $sum: 1 },
+          },
+        }]
+      );
       const result = {
         code: 0,
-        data: _.map(topics, f => {
-          return f;
+        data: _.map(topics, t => {
+          const countObj = _.find(aggregateResult, r => {
+            return r._id.topic_id === t._id + '';
+          });
+          t.post_count = countObj ? countObj.count : 0;
+          return t;
         }),
         count: count,
         total_page: Math.ceil(count / size),
