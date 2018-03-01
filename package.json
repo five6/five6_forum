@@ -4,6 +4,7 @@
   "description": "five6",
   "private": true,
   "dependencies": {
+    "await-stream-ready": "^1.0.1",
     "egg": "^2.0.0",
     "egg-elasticsearch": "^1.0.0",
     "egg-mongoose": "^2.1.1",
