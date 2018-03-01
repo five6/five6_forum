@@ -63,6 +63,19 @@ class UserService extends Service {
   async blog() {
     return [];
   }
+  async edit() {
+    const body = this.ctx.request.body;
+    const user_id = this.ctx.user._id;
+    delete body._id;
+    console.log(body);
+    await this.ctx.model.User.updateOne({ _id: user_id }, { $set: body });
+    const user = await this.ctx.model.User.findOne({ _id: user_id }).lean();
+    return _.pick(user, [ '_id', 'nickname', 'email', 'avatar', 'registerTime', 'lastLoginTime' ]);
+  }
+  async detail() {
+    const user = await this.ctx.model.User.findOne({ _id: this.ctx.user._id }).lean();
+    return _.pick(user, [ '_id', 'nickname', 'email', 'avatar', 'registerTime', 'lastLoginTime' ]);
+  }
 }
 
 module.exports = UserService;

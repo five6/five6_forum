@@ -6,6 +6,7 @@ module.exports = app => {
   const UserSchema = new mongoose.Schema({
     _id: { type: String },
     nickname: { type: String },
+    avatar: { type: String },
     salt: { type: String, default: '' },
     authToken: { type: String, default: '' },
     email: { type: String, index: true, unique: true },

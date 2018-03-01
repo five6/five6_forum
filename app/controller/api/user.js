@@ -65,6 +65,20 @@ class UserController extends Controller {
       data: blog,
     };
   }
+  async edit() {
+    const result = await this.ctx.service.user.edit();
+    this.ctx.body = {
+      code: 0,
+      data: result,
+    };
+  }
+  async detail() {
+    const result = await this.ctx.service.user.detail();
+    this.ctx.body = {
+      code: 0,
+      data: result,
+    };
+  }
 }
 
 module.exports = UserController;

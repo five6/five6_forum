@@ -23,11 +23,15 @@ module.exports = app => {
   router.post('/user/signin', controller.api.user.signin);
   router.post('/user/signup', controller.api.user.signup);
   router.get('/user/signout', api, controller.api.user.signout);
+  router.get('/user', controller.api.user.detail);
+  router.put('/user', controller.api.user.edit);
   router.get('/api/v1/user/topic', api, controller.api.user.topic);
   router.get('/api/v1/user/blog', api, controller.api.user.blog);
   router.post('/user/signin/qq', controller.api.user.qq);
   router.get('/user/signin/qq', controller.api.user.qq);
 
+
+  // error
   router.get('/error500', controller.page.home.error500);
 
 
