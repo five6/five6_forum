@@ -7,9 +7,11 @@ var app = new Vue({
       user: {}
     };
   },
-  mounte() {
-    $.get('/', ret => {
-
+  mounted() {
+    var self = this;
+    $.get('/user', ret => {
+      if (ret.code === 0)
+        self.user = ret.data;
     })
   },
   methods: {
@@ -17,7 +19,7 @@ var app = new Vue({
       $.ajax({
         type: 'put',
         url: '/user',
-        data: JSON.stringify({avatar: avatar}),
+        data: JSON.stringify({ avatar: avatar }),
         contentType: 'application/json',
         success: function () {
           toastr.success('头像上传成功！', '通知');
@@ -31,6 +33,13 @@ var app = new Vue({
       $('#id_upload').click();
     },
   },
+  filters: {
+    formatAvatar(avatar) {
+      if (avatar)
+        return '/public/files/' + avatar;
+      return '/public/img/profile_big.jpg';
+    }
+  }
 });
 
 $(function () {

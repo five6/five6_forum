@@ -19,7 +19,7 @@ class UserController extends Controller {
       const user = await this.ctx.service.user.signin();
       if (user) {
         const self = this;
-        this.ctx.login(user, function() {
+        this.ctx.login(user, function () {
           self.ctx.redirect('/');
         });
       } else {

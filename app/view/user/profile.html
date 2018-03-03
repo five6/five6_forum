@@ -17,7 +17,7 @@
             <div>
                 <div class="ibox-content no-padding border-left-right avatar">
                     <input type="file" id="id_upload" style="display:none;" >
-                    <img alt="image" @click="upload" class="img-responsive" src="/public/img/profile_big.jpg">
+                    <img alt="image" @click="upload" class="img-responsive" :src="user.avatar | formatAvatar">
                 </div>
             </div>
         </div>
@@ -37,5 +37,8 @@
     <script type="text/javascript" src="/public/js/_lib/jquery-ui/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/public/js/_lib/jquery-ui/jquery.ui.widget.js"></script>
     <script type="text/javascript" src="/public/js/_lib/fileupload/jquery.fileupload.js"></script>
+    <script type="text/javascript">
+      
+    </script>
     <script type="text/javascript" src="/public/js/user/profile.js"></script>
 {% endblock  %}

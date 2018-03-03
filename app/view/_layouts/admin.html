@@ -63,7 +63,11 @@
                             {% if user_name %}
                                 <li>
                                     <a>
-                                        <i class="fa"></i> {{user_name}}
+                                        <i class="fa"></i> 
+                                        {% if avatar %}
+                                            <img style="width:30px;" src="/public/files/{{avatar}}">
+                                        {% endif %}
+                                        {{user_name}}
                                     </a>
                                 </li>
                                 <li>

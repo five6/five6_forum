@@ -49,6 +49,7 @@ module.exports = () => {
     });
     this.state.$layouts = sidenav;
     this.state.user_name = this.user ? this.user._id : null;
+    this.state.avatar = this.user ? this.user.avatar || '' : '';
     yield next;
   };
 };
