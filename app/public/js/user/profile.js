@@ -23,6 +23,7 @@ var app = new Vue({
         contentType: 'application/json',
         success: function () {
           toastr.success('头像上传成功！', '通知');
+          window.location.reload(); 
         },
         error: function (err, status) {
           console.log(err, status)
