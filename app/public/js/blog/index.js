@@ -11,6 +11,7 @@ new Vue({
             reply_placeholders: [],
             inputing: [],
             showReply: [],
+            noBlog: false,
             focusing: null,
             activeCurrentReply: [],
             replyUrl: '/api/v1/blog/:_id/reply',
@@ -198,6 +199,9 @@ new Vue({
         },
         renderData(data) {
             this.blogs = data;
+            if (!this.blogs.length) {
+                this.noBlog = true;
+            }
             _.each(data, d => {
                 this.placeholders[d._id] = '写下你的评论...'
             });

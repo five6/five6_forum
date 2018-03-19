@@ -115,13 +115,13 @@
         <pagination-component @renderdata="renderData" :size="10" link="/api/v1/blog"  />
     </div>
     <div class="col-lg-12">
-        <div v-if="!blogs.length" class="m-t-lg alert alert-info">
+        <div v-if="noBlog" class="m-t-lg alert alert-info">
             暂时没有内容哦，请移步个人中心写一篇吧！
             <a href="/blogs/create" class=" btn text-navy">确定</button>
         </div>
         
     </div>
-    <div class="modal inmodal fade" id="id_modal_session" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal" id="id_modal_session" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-small">
             <div class="modal-content">
                 <div class="modal-header">
