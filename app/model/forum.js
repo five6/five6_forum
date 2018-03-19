@@ -5,7 +5,7 @@ module.exports = app => {
   const ForumSchema = new mongoose.Schema({
     _id: { type: Object },
     category: { type: String },
-    icon: { type: String },
+    icon: { type: String, default: '' },
     title: { type: String },
     description: { type: String },
     author_user: { type: String },

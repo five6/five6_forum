@@ -8,6 +8,7 @@ var app = new Vue({
             user_list: [],
             hovers: [],
             forum: {
+                icon: '',
                 author_user: '',
                 title: '',
                 description: '',
@@ -29,6 +30,12 @@ var app = new Vue({
         setForumRid: function (item) {
             this.forum.rid = item._id;
             this.forum.rid_name = item.text;
+        },
+        selectForumIcon: function () {
+            $('#forum_icon_preview').trigger('click');
+        },
+        setForumIcon(md5) {
+            this.forum.icon = md5;
         },
         forbiddenSaveButton() {
 
@@ -73,12 +80,17 @@ var app = new Vue({
     filters: {
         formatTime: function (time) {
             return moment(time).fromNow();
+        },
+        formatImage(md5) {
+            if (md5)
+                return '/public/files/' + md5;
+            return ''
         }
     }
 })
 
 $(function () {
-    $('#forumIcon').fileupload({
+    $('#forum_icon_preview').fileupload({
         url: '/api/v1/files',
         dataType: 'json',
         autoUpload: true,
@@ -90,7 +102,7 @@ $(function () {
         },
         done(e, data) {
             const md5 = data.result ? data.result.md5 : '';
-            app.setAvatar(md5);
+            app.setForumIcon(md5);
         },
         fail(err) {
             console.log(err);
